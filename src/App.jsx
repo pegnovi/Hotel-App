@@ -7,6 +7,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import CustomNavigationBar from './CustomNavigationBar';
+import ShopContainer from './ShopContainer';
 
 const Test = () => {
   return (
@@ -39,6 +40,7 @@ class App extends Component {
           <Route path="/about" component={Test}/>
           <Route path="/about2" component={Test}/>
           <Route path="/test/:testText" component={TestParam}/>
+          <Route path="/shop/" component={ShopContainer}/>
 
         </div>
       </Router>
