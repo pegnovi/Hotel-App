@@ -1,48 +1,58 @@
-const pg = require('pg');
+const pgp = require('pg-promise')();
 
-console.log(process.env);
-
-const pool = new pg.Pool({
+const db = pgp({
 	user: process.env.PG_USER,
 	password: process.env.PG_PASSWORD,
 	database: process.env.PG_DATABASE,
 	host: process.env.PG_HOST,
-	max: 10, // max number of clients in pool
+	poolSize: 10, // max number of clients in pool
 	idleTimeoutMillis: 1000,
 	port: process.env.PG_PORT
 });
 
 module.exports = function(app) {
 
-	app.post('/api/services', (req, res) => {
-		pool.connect((err, client, release) => {
-			if(err) {
-				throw err;
-			}
+	app.put('/api/cart', (req, res) => {
+	
+		var queryString = 'UPDATE cart SET cartContent=${cartContent} WHERE id=${id}';
 
-			console.log(req.query);
-
-			querystring = `INSERT INTO services (id, name, description, price)
-				VALUES (
-					'${req.query.id}',
-					'${req.query.name}',
-					'${req.query.description}',
-					'${parseFloat(req.query.price)}'
-				)
-			`;
-
-			client.query(querystring, (err, result) => {
-				if(err) {
-					throw err;
-				}
-
-				// was successful
-				release();
-				if(result && result.rows) {
-					res.send('created todo');
-				}
-			});
+		db.none(queryString, {
+			cartContent: {
+				[req.body.productId]: 1
+			},
+			id: '1a'
+		})
+		.then(function() {
+			res.send('cart updated');
+		})
+		.catch(function(err) {
+			throw err;
 		});
+	});
+
+
+
+	app.post('/api/services', (req, res) => {
+		
+		console.log(req.query);
+
+		querystring = `INSERT INTO services (id, name, description, price)
+			VALUES (
+				'${req.body.id}',
+				'${req.body.name}',
+				'${req.body.description}',
+				'${parseFloat(req.body.price)}'
+			)
+		`;
+
+		db.none(querystring)
+		.then(function() {
+			res.send('created todo');
+		})
+		.catch(function(err) {
+			throw err;
+		});
+
 	});
 
 };

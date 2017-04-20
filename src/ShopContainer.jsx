@@ -6,17 +6,23 @@ import 'react-table/react-table.css'
 
 import ShopServiceVisual from './ShopServiceVisual';
 
+import 'whatwg-fetch'; //fetch
+
 export default class ShopContainer extends Component {
 	render() {
+
+		// Sample product data
 		const data = [
 			{
-				picture: 'massage.png',
+				productId: 'mr1',
+				picture: require('./images/massage.png'),
 				name: 'Massage',
 				description: 'A very rough massage',
 				price: 26
 			},
 			{
-				picture: 'breakfastInBed.png',
+				productId: 'bib1',
+				picture: require('./images/breakfastInBed.png'),
 				name: 'Breakfast in Bed',
 				description: 'You can choose from a menu',
 				price: 41
@@ -28,7 +34,8 @@ export default class ShopContainer extends Component {
 		const columns = [
 			{
 				header: 'Picture',
-				accessor: 'picture'
+				accessor: 'picture',
+				render: props => <ShopServiceVisual pictureBlob={props.value}/>
 			},
 			{
 				header: 'Service Name',
@@ -42,6 +49,20 @@ export default class ShopContainer extends Component {
 				header: 'Price',
 				accessor: 'price',
 				render: props => <span>{'$' + props.value}</span> // Custom cell components!
+			},
+			{
+				header: 'Add to Cart',
+				accessor: 'productId',
+				render: props => {
+					return <div>
+						<button onClick={() => {
+							console.log('adding to cart');
+							console.log(props);
+						}}>
+							Add to Cart
+						</button>
+					</div>
+				}
 			}
 		];
 		
