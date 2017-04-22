@@ -14,14 +14,14 @@ export default class ShopContainer extends Component {
 		// Sample product data
 		const data = [
 			{
-				productId: 'mr1',
+				serviceId: 'mr1',
 				picture: require('./images/massage.png'),
 				name: 'Massage',
 				description: 'A very rough massage',
 				price: 26
 			},
 			{
-				productId: 'bib1',
+				serviceId: 'bib1',
 				picture: require('./images/breakfastInBed.png'),
 				name: 'Breakfast in Bed',
 				description: 'You can choose from a menu',
@@ -50,9 +50,10 @@ export default class ShopContainer extends Component {
 				accessor: 'price',
 				render: props => <span>{'$' + props.value}</span> // Custom cell components!
 			},
+			// TODO: Link to page where service details are inputted before adding to cart/creating serviceInstance
 			{
 				header: 'Add to Cart',
-				accessor: 'productId',
+				accessor: 'serviceId',
 				render: props => {
 					return <div>
 						<button onClick={() => {

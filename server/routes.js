@@ -12,25 +12,22 @@ const db = pgp({
 
 module.exports = function(app) {
 
-	app.put('/api/cart', (req, res) => {
-	
-		var queryString = 'UPDATE cart SET cartContent=${cartContent} WHERE id=${id}';
+	app.post('/api/serviceInstance', (req, res) => {
 
-		db.none(queryString, {
-			cartContent: {
-				[req.body.productId]: 1
-			},
-			id: '1a'
-		})
-		.then(function() {
-			res.send('cart updated');
+		// TODO: check if valid serviceId and cartId
+		db.none('INSERT INTO serviceInstances (serviceId, cartId) VALUES (${serviceId}, ${cartId})',
+				{
+					serviceId: req.body.serviceId,
+					cartId: req.body.cartId
+				}
+		)
+		.then(() => {
+			res.send('Saved service instance');
 		})
 		.catch(function(err) {
 			throw err;
 		});
 	});
-
-
 
 	app.post('/api/services', (req, res) => {
 		
