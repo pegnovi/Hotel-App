@@ -8,6 +8,7 @@ import './App.css';
 
 import CustomNavigationBar from './CustomNavigationBar';
 import ShopContainer from './ShopContainer';
+import ServiceInstance from './ServiceInstance';
 
 const Test = () => {
   return (
@@ -41,6 +42,7 @@ class App extends Component {
           <Route path="/about2" component={Test}/>
           <Route path="/test/:testText" component={TestParam}/>
           <Route path="/shop/" component={ShopContainer}/>
+          <Route path="/serviceInstance/:serviceId" component={ServiceInstance}/>
 
         </div>
       </Router>

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { Link } from 'react-router-dom';
+
 import ReactTable from 'react-table';
 
 import 'react-table/react-table.css'
@@ -56,12 +58,11 @@ export default class ShopContainer extends Component {
 				accessor: 'serviceId',
 				render: props => {
 					return <div>
-						<button onClick={() => {
-							console.log('adding to cart');
-							console.log(props);
-						}}>
-							Add to Cart
-						</button>
+						<Link to={`/serviceInstance/${props.value}`}>
+							<button>
+								Add to Cart
+							</button>
+						</Link>
 					</div>
 				}
 			}

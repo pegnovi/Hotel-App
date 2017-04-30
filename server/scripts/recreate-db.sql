@@ -1,5 +1,15 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+
+/*
+	Service Type Info
+	1. Requires worker
+	2. Requires equipment
+	3. Requires worker to stay with client until service ends
+	serviceTypes:
+	- 
+*/
+
 DROP TABLE IF EXISTS services;
 
 CREATE TABLE services(
@@ -9,6 +19,8 @@ CREATE TABLE services(
 	durationMinutes decimal,
 	price money,
 	/*picture blob?*/
+	serviceType character varying,
+	serviceData json,
 	PRIMARY KEY (id)
 );
 
