@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import { FormGroup, Col, ControlLabel, FormControl, HelpBlock, Button } from 'react-bootstrap';
 
+import DateTime from 'react-datetime';
+
 function FieldGroup({ id, label, help, ...props }) {
 	return (
 		<FormGroup controlId={id}>
@@ -10,6 +12,20 @@ function FieldGroup({ id, label, help, ...props }) {
 			</Col>
 			<Col xs={6} md={6}>
 				<FormControl {...props} />
+			</Col>
+			{help && <HelpBlock>{help}</HelpBlock>}
+		</FormGroup>
+	);
+}
+
+function FieldGroupDateTime({ id, label, help, ...props }) {
+	return (
+		<FormGroup controlId={id}>
+			<Col xs={3} md={3}>
+				<ControlLabel>{label}</ControlLabel>
+			</Col>
+			<Col xs={6} md={6}>
+				<DateTime {...props} />
 			</Col>
 			{help && <HelpBlock>{help}</HelpBlock>}
 		</FormGroup>
@@ -28,7 +44,8 @@ export default class ServiceInstance extends Component {
 	}
 	componentDidMount() {
 		this.setState({
-			val: ''
+			val: '',
+			scheduledDateTime: ''
 		});
 	}
 	render() {
@@ -46,9 +63,19 @@ export default class ServiceInstance extends Component {
 				}}
 			/>
 
+			<FieldGroupDateTime
+				id="scheduledDateTime"
+				label="Scheduled Date Time"
+				value={this.state.scheduledDateTime}
+				onChange={(e) => {
+					this.setState({ scheduledDateTime: e.target.value});
+				}}
+			/>
+
 			<Button 
 				onClick={() => {
-					console.log(this.state.val);
+					console.log(this.state);
+					//TODO: save serviceId, cartId, scheduledDateTime
 				}}
 			>
 				Submit
