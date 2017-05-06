@@ -4,6 +4,8 @@ import { FormGroup, Col, ControlLabel, FormControl, HelpBlock, Button } from 're
 
 import DateTime from 'react-datetime';
 
+import 'whatwg-fetch'; //fetch
+
 function FieldGroup({ id, label, help, ...props }) {
 	return (
 		<FormGroup controlId={id}>
@@ -68,14 +70,37 @@ export default class ServiceInstance extends Component {
 				label="Scheduled Date Time"
 				value={this.state.scheduledDateTime}
 				onChange={(e) => {
-					this.setState({ scheduledDateTime: e.target.value});
+					this.setState({ scheduledDateTime: e.target.scheduledDateTime});
 				}}
 			/>
 
 			<Button 
 				onClick={() => {
+					// TODO: Probably move all this logic elsewhere
 					console.log(this.state);
-					//TODO: save serviceId, cartId, scheduledDateTime
+					// TODO: save serviceId, cartId, scheduledDateTime
+
+					const serviceInstance = {
+						serviceId: this.props.match.params.serviceId,
+						cartId: '2a'
+					};
+
+					const options = {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify(serviceInstance)
+					};
+					fetch('/api/serviceInstance', options)
+					.then(() => {
+						//let updatedTodos = this.state.todos.map(item => item);
+						//updatedTodos.push(todo);
+						//this.setState({ todos: updatedTodos });
+						console.log('serviceInstance saved');
+					})
+					.catch((error) => {
+						throw error;
+					});
+
 				}}
 			>
 				Submit
