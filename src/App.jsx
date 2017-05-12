@@ -10,6 +10,8 @@ import CustomNavigationBar from './CustomNavigationBar';
 import ShopContainer from './ShopContainer';
 import ServiceInstance from './ServiceInstance';
 
+import ShopServiceVisual from './ShopServiceVisual';
+
 const Test = () => {
   return (
     <div>
@@ -26,18 +28,32 @@ const TestParam = ({match}) => {
   );
 }
 
+class TestColumnComponent extends Component {
+  render() {
+    return (
+      <div>
+        {this.props.accessor}
+      </div>
+    );
+  }
+}
+
 import ReactTable from 'react-table';
 import 'react-table/react-table.css'
 
 const myOrderList = [
   {
+    instanceId: 'abcd', // when order (combine instance list with product list)
     serviceId: 'mr1',
+    picture: require('./images/massage.png'),
     name: 'Massage',
     description: 'A very rough massage',
     price: 26
   },
   {
+    instanceId: 'efgh', // when order (combine instance list with product list)
     serviceId: 'bib1',
+    picture: require('./images/breakfastInBed.png'),
     name: 'Breakfast in Bed',
     description: 'You can choose from a menu',
     price: 41
@@ -48,6 +64,11 @@ class ProductTable extends Component {
   render() {
 
     const columns = [
+      {
+        header: 'Picture',
+        accessor: 'picture',
+        render: props => <ShopServiceVisual pictureBlob={props.value}/>
+      },
       {
         header: 'Service Name',
         accessor: 'name' // String-based value accessors!
@@ -73,6 +94,8 @@ class ProductTable extends Component {
       heading = 'My Orders';
     }
 
+    // TODO: Make it add a component instead
+    // TODO: Pass component props
     const buttonAccessor = this.props.buttonAccessor;
     const buttonText = this.props.buttonText;
     const buttonHandler = this.props.buttonHandler;
@@ -89,6 +112,26 @@ class ProductTable extends Component {
         }
       })
     }
+
+    const headerList = this.props.headerList;
+    const accessorList = this.props.accessorList;
+    const columnComponentList = this.props.columnComponentList;
+    if(columnComponentList) {
+      columns.push({
+        header: headerList[0],
+        accessor: accessorList[0],
+        render: props => {
+          let TempComponent = columnComponentList[0];
+          return <div>
+            <TempComponent accessor={accessorList[0]} />
+          </div>
+        }
+      });
+    }
+
+    // TODO: this.props.otherColumns
+    // TODO: this.props.otherColumnComponents
+    // ^^ For more customization (Shop will need this)
 
     return (
       <div>
@@ -125,14 +168,26 @@ class App extends Component {
           <Route path="/about" component={Test}/>
           <Route path="/about2" component={Test}/>
           <Route path="/test/:testText" component={TestParam}/>
-          <Route path="/shop/" component={ShopContainer}/>
+          {/* <Route path="/shop/" component={ShopContainer}/> */}
+          <Route path="/shop/" render={() => <ProductTable
+              tableType={'shop'}
+              data={myOrderList}
+              buttonAccessor={'serviceId'}
+              buttonText={'Add to Cart'}
+              buttonHandler={() => { console.log('TODO: Add to Cart'); }}
+
+              headerList={['Test']}
+              accessorList={['serviceId']}
+              columnComponentList={[TestColumnComponent]}
+            />
+          } />
           <Route path="/serviceInstance/:serviceId" component={ServiceInstance}/>
           <Route path="/cart/" render={() => <ProductTable
               tableType={'cart'}
               data={myOrderList}
               buttonAccessor={'instanceId'}
               buttonText={'Remove'}
-              buttonHandler={() => { console.log('hello'); }}
+              buttonHandler={() => { console.log('TODO: Remove from Cart'); }}
             />
           } />
           <Route path="/orders/" render={() => <ProductTable
