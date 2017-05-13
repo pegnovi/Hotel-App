@@ -1,5 +1,4 @@
 
-
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import React, { Component } from 'react';
@@ -10,7 +9,7 @@ import CustomNavigationBar from './CustomNavigationBar';
 import ShopContainer from './ShopContainer';
 import ServiceInstance from './ServiceInstance';
 
-import ShopServiceVisual from './ShopServiceVisual';
+import ProductTable from './ProductTable';
 
 import { Link } from 'react-router-dom';
 
@@ -30,20 +29,7 @@ const TestParam = ({match}) => {
 	);
 }
 
-class TestColumnComponent extends Component {
-	render() {
-		console.log(this.props);
-		return (
-			<div>
-				{this.props.accessor}
-			</div>
-		);
-	}
-}
-
-import ReactTable from 'react-table';
-import 'react-table/react-table.css'
-
+// TODO: Query for this later
 const myOrderList = [
 	{
 		instanceId: 'abcd', // when order (combine instance list with product list)
@@ -63,62 +49,6 @@ const myOrderList = [
 	}
 ];
 
-class ProductTable extends Component {
-	render() {
-
-		const columns = [
-			{
-				header: 'Picture',
-				accessor: 'picture',
-				render: props => <ShopServiceVisual pictureBlob={props.value}/>
-			},
-			{
-				header: 'Service Name',
-				accessor: 'name' // String-based value accessors!
-			},
-			{
-				header: 'Description',
-				accessor: 'description'
-			},
-			{
-				header: 'Price',
-				accessor: 'price',
-				render: props => <span>{'$' + props.value}</span> // Custom cell components!
-			}
-		];
-
-		const extraColumns = this.props.extraColumns;
-		if(extraColumns) {
-			extraColumns.map((columnData) => {
-				let TempComponent = columnData.component;
-				columns.push({
-					header: columnData.header,
-					accessor: columnData.accessor,
-					render: props => {
-						return (<div>
-							<TempComponent accessor={props.value} {...columnData.componentProps} />
-						</div>);
-					}
-				})
-			});
-		}
-
-		return (
-			<div>
-				<h1> {this.props.tableHeader} </h1>
-
-				<div>
-					<ReactTable
-						data={this.props.data}
-						columns={columns}
-						pageSize={1}
-					/>
-				</div>
-			</div>
-		);
-	}
-}
-
 // Passing props to Route components
 // By tchaffee
 // https://github.com/ReactTraining/react-router/issues/4105
@@ -136,7 +66,6 @@ class App extends Component {
 					<CustomNavigationBar/>
 
 					<Route path="/about" component={Test}/>
-					<Route path="/about2" component={Test}/>
 					<Route path="/test/:testText" component={TestParam}/>
 					{/* <Route path="/shop/" component={ShopContainer}/> */}
 					<Route path="/shop/" render={() => <ProductTable
@@ -162,14 +91,6 @@ class App extends Component {
 										</div>
 									}),
 									componentProps: {}
-								},
-								{
-									header: 'Action',
-									accessor: 'serviceId',
-									component: TestColumnComponent,
-									componentProps: {
-										ttt: '3'
-									}
 								}
 							]}
 						/>
