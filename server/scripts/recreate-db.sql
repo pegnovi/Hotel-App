@@ -19,16 +19,17 @@ CREATE TABLE services(
 	durationMinutes decimal,
 	price money,
 	/*picture blob?*/
+	picutreKey character varying,
 	serviceType character varying,
 	serviceData json,
 	PRIMARY KEY (id)
 );
 
-INSERT INTO services (id, name, description, durationMinutes, price) 
-	VALUES  ('mr1', 'massage', 'a very rough massage', 60, 200);
+INSERT INTO services (id, name, description, durationMinutes, price, pictureKey) 
+	VALUES  ('mr1', 'massage', 'a very rough massage', 60, 200, 'massage');
 
-INSERT INTO services (id, name, description, durationMinutes, price) 
-	VALUES  ('bnb1', 'breakfast in bed', 'choose food from menu', 0, 100);
+INSERT INTO services (id, name, description, durationMinutes, price, pictureKey) 
+	VALUES  ('bnb1', 'breakfast in bed', 'choose food from menu', 0, 100, 'breakfastInBed');
 
 
 DROP TABLE IF EXISTS serviceInstances;
