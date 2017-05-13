@@ -6,7 +6,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import CustomNavigationBar from './CustomNavigationBar';
-import ShopContainer from './ShopContainer';
+
 import ServiceInstance from './ServiceInstance';
 
 import ProductTable from './ProductTable';
@@ -34,7 +34,7 @@ const myOrderList = [
 	{
 		instanceId: 'abcd', // when order (combine instance list with product list)
 		serviceId: 'mr1',
-		picture: require('./images/massage.png'),
+		pictureKey: 'massage',
 		name: 'Massage',
 		description: 'A very rough massage',
 		price: 26
@@ -42,7 +42,7 @@ const myOrderList = [
 	{
 		instanceId: 'efgh', // when order (combine instance list with product list)
 		serviceId: 'bib1',
-		picture: require('./images/breakfastInBed.png'),
+		pictureKey: 'breakfastInBed',
 		name: 'Breakfast in Bed',
 		description: 'You can choose from a menu',
 		price: 41
@@ -67,7 +67,6 @@ class App extends Component {
 
 					<Route path="/about" component={Test}/>
 					<Route path="/test/:testText" component={TestParam}/>
-					{/* <Route path="/shop/" component={ShopContainer}/> */}
 					<Route path="/shop/" render={() => <ProductTable
 							tableHeader={'Shop'}
 							tableType={'shop'}

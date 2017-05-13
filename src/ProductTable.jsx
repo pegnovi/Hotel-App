@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css'
 
-import ShopServiceVisual from './ShopServiceVisual';
+import ProductImage from './ProductImage';
 
 export default class ProductTable extends Component {
 	render() {
@@ -11,8 +11,8 @@ export default class ProductTable extends Component {
 		const columns = [
 			{
 				header: 'Picture',
-				accessor: 'picture',
-				render: props => <ShopServiceVisual pictureBlob={props.value}/>
+				accessor: 'pictureKey',
+				render: props => <ProductImage pictureKey={props.value}/>
 			},
 			{
 				header: 'Service Name',
@@ -41,7 +41,8 @@ export default class ProductTable extends Component {
 							<TempComponent accessor={props.value} {...columnData.componentProps} />
 						</div>);
 					}
-				})
+				});
+				return true;
 			});
 		}
 
