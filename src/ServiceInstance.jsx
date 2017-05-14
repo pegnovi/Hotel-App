@@ -79,7 +79,6 @@ export default class ServiceInstance extends Component {
 			<FieldGroupDateTime
 				id="scheduledDateTime"
 				label="Scheduled Date Time"
-				value={this.state.scheduledDateTime}
 				onChange={(value) => {
 					const dateFormat = 'MM-DD-YYYY h:mm A';
 					this.setState({ scheduledDateTime: value.format(dateFormat)});
