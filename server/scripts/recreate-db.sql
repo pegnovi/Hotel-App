@@ -42,6 +42,14 @@ CREATE TABLE serviceInstances(
 	PRIMARY KEY (id)
 );
 
+DROP TABLE IF EXISTS orders;
+
+CREATE TABLE orders(
+	id uuid DEFAULT uuid_generate_v4 (),
+	serviceInstanceId character varying,
+	userId character varying,
+	PRIMARY KEY (id)
+);
 
 /* TODO?:
 	Probably don't need this.

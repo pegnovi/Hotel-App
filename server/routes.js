@@ -39,10 +39,11 @@ module.exports = function(app) {
 		console.log(JSON.stringify(req.body, null, 2));
 
 		// TODO: check if valid serviceId and cartId
-		db.none('INSERT INTO serviceInstances (serviceId, cartId) VALUES (${serviceId}, ${cartId})',
+		db.none('INSERT INTO serviceInstances (serviceId, cartId, scheduledDateTime) VALUES (${serviceId}, ${cartId}, ${scheduledDateTime})',
 				{
 					serviceId: req.body.serviceId,
-					cartId: req.body.cartId
+					cartId: req.body.cartId,
+					scheduledDateTime: req.body.scheduledDateTime
 				}
 		)
 		.then(() => {
