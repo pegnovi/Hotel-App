@@ -8,29 +8,38 @@ import 'whatwg-fetch'; //fetch
 
 function FieldGroup({ id, label, help, ...props }) {
 	return (
-		<FormGroup controlId={id}>
-			<Col xs={3} md={3}>
-				<ControlLabel>{label}</ControlLabel>
-			</Col>
-			<Col xs={6} md={6}>
-				<FormControl {...props} />
-			</Col>
-			{help && <HelpBlock>{help}</HelpBlock>}
-		</FormGroup>
+		<div>
+			<FormGroup controlId={id}>
+				<Col xs={3} md={3}>
+					<ControlLabel>{label}</ControlLabel>
+				</Col>
+				<Col xs={6} md={6}>
+					<FormControl {...props} />
+				</Col>
+				{help && <HelpBlock>{help}</HelpBlock>}
+			</FormGroup>
+			<br />
+			<br />
+		</div>
+		
 	);
 }
 
 function FieldGroupDateTime({ id, label, help, ...props }) {
 	return (
-		<FormGroup controlId={id}>
-			<Col xs={3} md={3}>
-				<ControlLabel>{label}</ControlLabel>
-			</Col>
-			<Col xs={6} md={6}>
-				<DateTime {...props} />
-			</Col>
-			{help && <HelpBlock>{help}</HelpBlock>}
-		</FormGroup>
+		<div>
+			<FormGroup controlId={id}>
+				<Col xs={3} md={3}>
+					<ControlLabel>{label}</ControlLabel>
+				</Col>
+				<Col xs={6} md={6}>
+					<DateTime {...props} />
+				</Col>
+				{help && <HelpBlock>{help}</HelpBlock>}
+			</FormGroup>
+			<br />
+			<br />
+		</div>
 	);
 }
 
@@ -54,6 +63,8 @@ export default class ServiceInstance extends Component {
 		return <div>
 			Hello {this.props.match.params.serviceId}
 
+			{/* Add product details here */}
+
 			<FieldGroup
 				id="val"
 				type="text"
@@ -69,8 +80,9 @@ export default class ServiceInstance extends Component {
 				id="scheduledDateTime"
 				label="Scheduled Date Time"
 				value={this.state.scheduledDateTime}
-				onChange={(e) => {
-					this.setState({ scheduledDateTime: e.target.scheduledDateTime});
+				onChange={(value) => {
+					const dateFormat = 'MM-DD-YYYY h:mm A';
+					this.setState({ scheduledDateTime: value.format(dateFormat)});
 				}}
 			/>
 
@@ -82,7 +94,8 @@ export default class ServiceInstance extends Component {
 
 					const serviceInstance = {
 						serviceId: this.props.match.params.serviceId,
-						cartId: '2a'
+						cartId: '2a', // user specific
+						scheduledDateTime: this.state.scheduledDateTime
 					};
 
 					const options = {
@@ -90,7 +103,7 @@ export default class ServiceInstance extends Component {
 						headers: { 'Content-Type': 'application/json' },
 						body: JSON.stringify(serviceInstance)
 					};
-					fetch('/api/serviceInstance', options)
+					fetch('/api/serviceInstances', options)
 					.then(() => {
 						//let updatedTodos = this.state.todos.map(item => item);
 						//updatedTodos.push(todo);

@@ -19,17 +19,17 @@ CREATE TABLE services(
 	durationMinutes decimal,
 	price money,
 	/*picture blob?*/
-	picutreKey character varying,
+	pictureKey character varying,
 	serviceType character varying,
 	serviceData json,
 	PRIMARY KEY (id)
 );
 
 INSERT INTO services (id, name, description, durationMinutes, price, pictureKey) 
-	VALUES  ('mr1', 'massage', 'a very rough massage', 60, 200, 'massage');
+VALUES ('mr1', 'massage', 'a very rough massage', 60, 200, 'massage');
 
 INSERT INTO services (id, name, description, durationMinutes, price, pictureKey) 
-	VALUES  ('bnb1', 'breakfast in bed', 'choose food from menu', 0, 100, 'breakfastInBed');
+VALUES ('bnb1', 'breakfast in bed', 'choose food from menu', 0, 100, 'breakfastInBed');
 
 
 DROP TABLE IF EXISTS serviceInstances;
@@ -49,12 +49,15 @@ CREATE TABLE serviceInstances(
 	Finding a user's serviceInstances would then just be
 		a join between user table and serviceInstances table.
 */
+
+/*
 DROP TABLE IF EXISTS carts;
 
 CREATE TABLE carts(
 	id character varying,
-	cart character varying[], /* Array of service instances */
+	cart character varying[],
 	PRIMARY KEY (id)
 );
 
 INSERT INTO carts (id) VALUES ('1a');
+*/

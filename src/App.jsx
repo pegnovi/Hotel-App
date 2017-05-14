@@ -69,7 +69,6 @@ class App extends Component {
 					<Route path="/test/:testText" component={TestParam}/>
 					<Route path="/shop/" render={() => <ProductTable
 							tableHeader={'Shop'}
-							tableType={'shop'}
 							data={myOrderList}
 
 							buttonAccessor={'serviceId'}
@@ -97,7 +96,6 @@ class App extends Component {
 					<Route path="/serviceInstance/:serviceId" component={ServiceInstance}/>
 					<Route path="/cart/" render={() => <ProductTable
 							tableHeader={'Cart'}
-							tableType={'cart'}
 							data={myOrderList}
 
 							extraColumns={[
@@ -107,7 +105,7 @@ class App extends Component {
 									component: ((props) => {
 										return <div>
 												<button onClick={props.onClick}>
-													Add to Cart
+													Remove From Cart
 												</button>
 										</div>
 									}),
