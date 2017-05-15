@@ -13,6 +13,8 @@ import ProductTable from './ProductTable';
 
 import { Link } from 'react-router-dom';
 
+import 'whatwg-fetch'; //fetch
+
 const Test = () => {
 	return (
 		<div>
@@ -54,6 +56,30 @@ const myOrderList = [
 // https://github.com/ReactTraining/react-router/issues/4105
 
 class App extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			services: [],
+			serviceInstances: []
+		};
+	}
+
+	componentDidMount() {
+		fetch('/api/services')
+		.then((response) => {
+			return response.json();
+		})
+		.then((services) => {
+			this.setState({
+				services: services
+			})
+		})
+		.catch((error) => {
+			throw error;
+		});
+	}
+
 	render() {
 		return (
 			<Router>
@@ -69,7 +95,7 @@ class App extends Component {
 					<Route path="/test/:testText" component={TestParam}/>
 					<Route path="/shop/" render={() => <ProductTable
 							tableHeader={'Shop'}
-							data={myOrderList}
+							data={this.state.services}
 
 							buttonAccessor={'serviceId'}
 							buttonText={'Add to Cart'}
