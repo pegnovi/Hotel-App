@@ -34,9 +34,8 @@ module.exports = function(app) {
 		});
 	});
 
+	// Post new service instance
 	app.post('/api/serviceInstances', (req, res) => {
-
-		console.log(JSON.stringify(req.body, null, 2));
 
 		// TODO: check if valid serviceId and cartId
 		db.none('INSERT INTO serviceInstances (serviceId, cartId, scheduledDateTime) VALUES (${serviceId}, ${cartId}, ${scheduledDateTime})',
@@ -53,6 +52,26 @@ module.exports = function(app) {
 			throw err;
 		});
 	});
+
+	app.delete('/api/serviceInstances', (req, res) => {
+		
+		console.log(JSON.stringify(req.body, null, 2));
+
+		db.none('DELETE FROM serviceInstances WHERE id = ${serviceInstanceId}',
+			{
+				serviceInstanceId: req.body.serviceInstanceId
+			}
+		)
+		.then(() => {
+			res.send('Deleted serviceInstance');
+		})
+		.catch(function(err) {
+			throw err;
+		});
+
+	});
+
+
 
 	app.post('/api/services', (req, res) => {
 		
