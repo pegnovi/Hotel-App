@@ -20,7 +20,7 @@ export default class CustomNavigationBar extends Component {
 				<Nav>
 
 					<NavItem eventKey={1}>
-						<NavLink exact to="/about" activeStyle={selectedStyle}>About</NavLink>
+						<NavLink exact to="/rooms" activeStyle={selectedStyle}>Rooms</NavLink>
 					</NavItem>
 
 					<NavItem eventKey={2}>
@@ -29,6 +29,10 @@ export default class CustomNavigationBar extends Component {
 
 					<NavItem eventKey={3}>
 						<NavLink to={`/test/${tVar.item}`}>Test</NavLink>
+					</NavItem>
+
+					<NavItem eventKey={9}>
+						<NavLink exact to={"/shop/"} activeStyle={selectedStyle}>Shop</NavLink>
 					</NavItem>
 
 					<NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
@@ -41,6 +45,10 @@ export default class CustomNavigationBar extends Component {
 
 					<NavItem eventKey={4}>
 						<NavLink exact to="/cart" activeStyle={selectedStyle}>Cart</NavLink>
+					</NavItem>
+
+					<NavItem eventKey={5}>
+						<NavLink exact to="/orders" activeStyle={selectedStyle}>Orders</NavLink>
 					</NavItem>
 
 				</Nav>
