@@ -20,7 +20,7 @@ export default class CustomNavigationBar extends Component {
 				<Nav>
 
 					<NavItem eventKey={1}>
-						<NavLink exact to="/about" activeStyle={selectedStyle}>About</NavLink>
+						<NavLink exact to="/rooms" activeStyle={selectedStyle}>Rooms</NavLink>
 					</NavItem>
 
 					<NavItem eventKey={2}>
