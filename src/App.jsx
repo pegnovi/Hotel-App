@@ -28,7 +28,20 @@ const TestParam = ({match}) => {
 // No more nested routes in react-router v4
 //https://stackoverflow.com/questions/41474134/nested-routes-with-react-router-v4
 
+import { FieldGroupDateTime } from './FieldGroup';
 class Room extends Component {
+	constructor(props) {
+		super(props);
+
+		// initialize app state
+		this.state = {};
+	}
+	componentDidMount() {
+		this.setState({
+			bookingStartDate: '',
+			bookingEndDate: ''
+		});
+	}
 	render() {
 		console.log(this);
 		return (
@@ -45,11 +58,23 @@ class Room extends Component {
 
 				<br/>
 
-				Booking Start Date
+				<FieldGroupDateTime
+					id="bookingStartDate"
+					label="Booking Start Date"
+					onChange={(value) => {
+						const dateFormat = 'MM-DD-YYYY h:mm A';
+						this.setState({ bookingStartDate: value.format(dateFormat)});
+					}}
+				/>
 
-				<br/>
-
-				Booking End Date
+				<FieldGroupDateTime
+					id="bookingEndDate"
+					label="Booking End Date"
+					onChange={(value) => {
+						const dateFormat = 'MM-DD-YYYY h:mm A';
+						this.setState({ bookingEndDate: value.format(dateFormat)});
+					}}
+				/>
 
 				<br/>
 
@@ -65,9 +90,7 @@ class Room extends Component {
 class Rooms extends Component {
 
 	render() {
-		//console.log(this);
 
-		console.log(this.props.roomIds);
 		let roomLinks = this.props.roomIds.map((roomId) => {
 			return (
 				<Link key={'room' + roomId.toString()} to={`rooms/${roomId}`}>
@@ -84,11 +107,8 @@ class Rooms extends Component {
 
 				{roomLinks}
 
-				<Link to='rooms/1'>
-					Room 1
-				</Link>
 
-		</div>
+			</div>
 		);
 	}
 }
@@ -159,7 +179,8 @@ class App extends Component {
 					<Route path="/test/:testText" component={TestParam}/>
 					<Route path="/shop/" render={() => <ProductTable
 							tableHeader={'Shop'}
-							data={this.state.services}
+							//data={this.state.services}
+							data={myOrderList}
 
 							extraColumns={[
 								{
