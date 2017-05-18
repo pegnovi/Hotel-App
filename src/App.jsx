@@ -13,6 +13,8 @@ import ProductTable from './ProductTable';
 
 import { Link } from 'react-router-dom';
 
+import Rooms from './Rooms';
+
 import 'whatwg-fetch'; //fetch
 
 
@@ -25,73 +27,6 @@ const TestParam = ({match}) => {
 }
 
 
-// No more nested routes in react-router v4
-//https://stackoverflow.com/questions/41474134/nested-routes-with-react-router-v4
-
-class Room extends Component {
-	render() {
-		console.log(this);
-		return (
-			<div>
-				Room {this.props.match.params.roomId}
-
-				<br/>
-
-				Room Price: ???
-
-				<br/>
-
-				Room Details: ???
-
-				<br/>
-
-				Booking Start Date
-
-				<br/>
-
-				Booking End Date
-
-				<br/>
-
-				Book This Room!
-
-				<br/>
-
-			</div>
-		);
-	}
-}
-
-class Rooms extends Component {
-
-	render() {
-		//console.log(this);
-
-		console.log(this.props.roomIds);
-		let roomLinks = this.props.roomIds.map((roomId) => {
-			return (
-				<Link key={'room' + roomId.toString()} to={`rooms/${roomId}`}>
-					Room {roomId}
-				</Link>
-			);
-		});
-
-		return (
-			<div>
-				Rooms
-
-				<br />
-
-				{roomLinks}
-
-				<Link to='rooms/1'>
-					Room 1
-				</Link>
-
-		</div>
-		);
-	}
-}
 
 // TODO: Query for this later
 const myOrderList = [
@@ -118,29 +53,29 @@ const myOrderList = [
 // https://github.com/ReactTraining/react-router/issues/4105
 
 class App extends Component {
-	constructor(props) {
-		super(props);
+	// constructor(props) {
+	// 	super(props);
 
-		this.state = {
-			services: [],
-			serviceInstances: []
-		};
-	}
+	// 	this.state = {
+	// 		services: [],
+	// 		serviceInstances: []
+	// 	};
+	// }
 
-	componentDidMount() {
-		fetch('/api/services')
-		.then((response) => {
-			return response.json();
-		})
-		.then((services) => {
-			this.setState({
-				services: services
-			})
-		})
-		.catch((error) => {
-			throw error;
-		});
-	}
+	// componentDidMount() {
+	// 	fetch('/api/services')
+	// 	.then((response) => {
+	// 		return response.json();
+	// 	})
+	// 	.then((services) => {
+	// 		this.setState({
+	// 			services: services
+	// 		})
+	// 	})
+	// 	.catch((error) => {
+	// 		throw error;
+	// 	});
+	// }
 
 	render() {
 		return (
@@ -153,13 +88,14 @@ class App extends Component {
 
 					<CustomNavigationBar/>
 
-					<Route exact path={`/rooms/:roomId`} component={Room}/>
-					<Route exact path="/rooms" render={() => <Rooms roomIds={[1,2,3]}/>} />
-					
+
+					<Route path="/rooms" render={() => <Rooms roomIds={[1,2,3]}/>} />
+
 					<Route path="/test/:testText" component={TestParam}/>
 					<Route path="/shop/" render={() => <ProductTable
 							tableHeader={'Shop'}
-							data={this.state.services}
+							//data={this.state.services}
+							data={myOrderList}
 
 							extraColumns={[
 								{
