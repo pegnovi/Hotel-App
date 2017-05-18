@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 import { Button } from 'react-bootstrap';
 
-import DateTime from 'react-datetime';
-
 import 'whatwg-fetch'; //fetch
 
 import { FieldGroup, FieldGroupDateTime } from './FieldGroup';

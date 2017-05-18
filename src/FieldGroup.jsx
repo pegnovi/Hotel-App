@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { FormGroup, Col, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import DateTime from 'react-datetime';
 
