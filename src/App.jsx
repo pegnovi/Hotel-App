@@ -7,13 +7,18 @@ import './App.css';
 
 import CustomNavigationBar from './CustomNavigationBar';
 
-import ServiceInstance from './ServiceInstance';
+import { ServiceInstanceContainer } from './ServiceInstance';
 
 import ProductTable from './ProductTable';
-
-import { Link } from 'react-router-dom';
+import { CartContainer } from './Cart';
+import { ShopContainer } from './Shop';
 
 import Rooms from './Rooms';
+
+import reducer from './reducer';
+import { setState } from './action_creators';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
 import 'whatwg-fetch'; //fetch
 
@@ -52,102 +57,83 @@ const myOrderList = [
 // By tchaffee
 // https://github.com/ReactTraining/react-router/issues/4105
 
+const store = createStore(reducer);
+store.dispatch(setState(
+	{
+		cart: [
+			{
+				instanceId: 'abcd', // when order (combine instance list with product list)
+				serviceId: 'mr1',
+				pictureKey: 'massage',
+				name: 'Massage',
+				description: 'A very rough massage',
+				price: 26
+			},
+			{
+				instanceId: 'efgh', // when order (combine instance list with product list)
+				serviceId: 'bib1',
+				pictureKey: 'breakfastInBed',
+				name: 'Breakfast in Bed',
+				description: 'You can choose from a menu',
+				price: 41
+			}
+		]
+	}
+));
+
 class App extends Component {
-	// constructor(props) {
-	// 	super(props);
+	constructor(props) {
+		super(props);
 
-	// 	this.state = {
-	// 		services: [],
-	// 		serviceInstances: []
-	// 	};
-	// }
+		this.state = {
+			services: [],
+			serviceInstances: []
+		};
+	}
 
-	// componentDidMount() {
-	// 	fetch('/api/services')
-	// 	.then((response) => {
-	// 		return response.json();
-	// 	})
-	// 	.then((services) => {
-	// 		this.setState({
-	// 			services: services
-	// 		})
-	// 	})
-	// 	.catch((error) => {
-	// 		throw error;
-	// 	});
-	// }
+	componentDidMount() {
+		// fetch('/api/services')
+		// .then((response) => {
+		// 	return response.json();
+		// })
+		// .then((services) => {
+		// 	this.setState({
+		// 		services: services
+		// 	})
+		// })
+		// .catch((error) => {
+		// 	throw error;
+		// });
+	}
 
 	render() {
 		return (
-			<Router>
-				<div className="App">
-					<div className="App-header">
-						<img src={logo} className="App-logo" alt="logo" />
-						<h2>Welcome to React</h2>
+			<Provider store={store}>
+				<Router>
+					<div className="App">
+						<div className="App-header">
+							<img src={logo} className="App-logo" alt="logo" />
+							<h2>Welcome to React</h2>
+						</div>
+
+						<CustomNavigationBar/>
+
+
+						<Route path="/rooms" render={() => <Rooms roomIds={[1,2,3]}/>} />
+
+						<Route path="/test/:testText" component={TestParam}/>
+						<Route path="/shop/" component={ShopContainer}/>
+						<Route path="/serviceInstance/:serviceId" component={ServiceInstanceContainer}/>
+						<Route path="/cart/" component={CartContainer}/>
+						<Route path="/orders/" render={() => <ProductTable
+								tableHeader={'Orders'}
+								tableType={'orders'}
+								data={myOrderList}
+							/>
+						} />
 					</div>
-
-					<CustomNavigationBar/>
-
-
-					<Route path="/rooms" render={() => <Rooms roomIds={[1,2,3]}/>} />
-
-					<Route path="/test/:testText" component={TestParam}/>
-					<Route path="/shop/" render={() => <ProductTable
-							tableHeader={'Shop'}
-							//data={this.state.services}
-							data={myOrderList}
-
-							extraColumns={[
-								{
-									header: 'Action',
-									accessor: 'serviceId',
-									component: ((props) => {
-										return <div>
-											<Link to={`/serviceInstance/${props.accessor}`}>
-												<button>
-													Add to Cart
-												</button>
-											</Link>
-										</div>
-									}),
-									componentProps: {}
-								}
-							]}
-						/>
-					} />
-					<Route path="/serviceInstance/:serviceId" component={ServiceInstance}/>
-					<Route path="/cart/" render={() => <ProductTable
-							tableHeader={'Cart'}
-							data={myOrderList}
-
-							extraColumns={[
-								{
-									header: 'Action',
-									accessor: 'instanceId',
-									component: ((props) => {
-										return <div>
-												<button onClick={props.onClick}>
-													Remove From Cart
-												</button>
-										</div>
-									}),
-									componentProps: {
-										onClick: () => {
-											console.log('TODO: Remove from Cart');
-										}
-									}
-								}
-							]}
-						/>
-					} />
-					<Route path="/orders/" render={() => <ProductTable
-							tableHeader={'Orders'}
-							tableType={'orders'}
-							data={myOrderList}
-						/>
-					} />
-				</div>
-			</Router>
+				</Router>
+			</Provider>
 		);
 	}
 }

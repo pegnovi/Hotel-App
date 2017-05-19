@@ -14,9 +14,11 @@
     "react-bootstrap": "^0.30.8",
     "react-datetime": "^2.8.10",
     "react-dom": "^15.4.2",
+    "react-redux": "^5.0.5",
     "react-router-dom": "^4.0.0",
     "react-table": "^5.5.1",
     "reactable": "^0.14.1",
+    "redux": "^3.6.0",
     "url-loader": "^0.5.8",
     "whatwg-fetch": "^2.0.3"
   },

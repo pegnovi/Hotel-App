@@ -6,11 +6,15 @@ import 'whatwg-fetch'; //fetch
 
 import { FieldGroup, FieldGroupDateTime } from './FieldGroup';
 
+import { find } from 'lodash';
+
+import * as actionCreators from './action_creators';
+import { connect } from 'react-redux';
 
 // TODO: Form input validation (validationState)
 // TODO: Form value saving (onChange handler to set state)
 
-export default class ServiceInstance extends Component {
+export class ServiceInstance extends Component {
 	constructor(props) {
 		super(props);
 
@@ -24,10 +28,23 @@ export default class ServiceInstance extends Component {
 		});
 	}
 	render() {
+
+		const chosenService = find(this.props.data,
+			(obj) => {
+				return obj.serviceId === this.props.match.params.serviceId;
+			}
+		);
+
 		return <div>
 			Hello {this.props.match.params.serviceId}
 
-			{/* Add product details here */}
+			<br/>
+			{chosenService.name}
+			<br/>
+			{chosenService.description}
+			<br/>
+			{chosenService.price}
+			<br/>
 
 			<FieldGroup
 				id="val"
@@ -49,38 +66,53 @@ export default class ServiceInstance extends Component {
 				}}
 			/>
 
-			<Button 
-				onClick={() => {
-					// TODO: Probably move all this logic elsewhere
-					console.log(this.state);
-					// TODO: save serviceId, cartId, scheduledDateTime
+			<Button
+				onClick={this.props.addToCart}
 
-					const serviceInstance = {
-						serviceId: this.props.match.params.serviceId,
-						cartId: '2a', // user specific
-						scheduledDateTime: this.state.scheduledDateTime
-					};
+				// onClick={() => {
+				// 	// TODO: Probably move all this logic elsewhere
+				// 	console.log(this.state);
+				// 	// TODO: save serviceId, cartId, scheduledDateTime
 
-					const options = {
-						method: 'POST',
-						headers: { 'Content-Type': 'application/json' },
-						body: JSON.stringify(serviceInstance)
-					};
-					fetch('/api/serviceInstances', options)
-					.then(() => {
-						//let updatedTodos = this.state.todos.map(item => item);
-						//updatedTodos.push(todo);
-						//this.setState({ todos: updatedTodos });
-						console.log('serviceInstance saved');
-					})
-					.catch((error) => {
-						throw error;
-					});
+				// 	const serviceInstance = {
+				// 		serviceId: this.props.match.params.serviceId,
+				// 		cartId: '2a', // user specific
+				// 		scheduledDateTime: this.state.scheduledDateTime
+				// 	};
 
-				}}
+				// 	const options = {
+				// 		method: 'POST',
+				// 		headers: { 'Content-Type': 'application/json' },
+				// 		body: JSON.stringify(serviceInstance)
+				// 	};
+				// 	fetch('/api/serviceInstances', options)
+				// 	.then(() => {
+				// 		//let updatedTodos = this.state.todos.map(item => item);
+				// 		//updatedTodos.push(todo);
+				// 		//this.setState({ todos: updatedTodos });
+				// 		console.log('serviceInstance saved');
+				// 	})
+				// 	.catch((error) => {
+				// 		throw error;
+				// 	});
+
+				// }}
+
 			>
 				Submit
 			</Button>
 		</div>
 	}
-};
+}
+
+function mapStateToProps(state) {
+	console.log(state);
+	return {
+		data: state.cart
+	};
+}
+
+export const ServiceInstanceContainer = connect(
+	mapStateToProps,
+	actionCreators
+)(ServiceInstance);
