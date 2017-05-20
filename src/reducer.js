@@ -3,6 +3,7 @@ function setState(state, newState) {
 }
 
 function addToCart(state, item) {
+	console.log(item);
 	console.log('ADD TO CART');
 	return state;
 }

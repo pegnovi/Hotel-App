@@ -67,7 +67,15 @@ export class ServiceInstance extends Component {
 			/>
 
 			<Button
-				onClick={this.props.addToCart}
+				onClick={() => { 
+						const serviceInstanceDetails = {
+							serviceId: this.props.match.params.serviceId,
+							cartId: '2a', // user specific
+							scheduledDateTime: this.state.scheduledDateTime
+						};
+						this.props.addToCart(serviceInstanceDetails); 
+					}
+				}
 
 				// onClick={() => {
 				// 	// TODO: Probably move all this logic elsewhere
