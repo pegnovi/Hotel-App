@@ -16,8 +16,9 @@ import { ShopContainer } from './Shop';
 import Rooms from './Rooms';
 
 import reducer from './reducer';
+import remoteActionMiddleware from './remote_action_middleware';
 import { setState } from './action_creators';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
 import 'whatwg-fetch'; //fetch
@@ -57,7 +58,9 @@ const myOrderList = [
 // By tchaffee
 // https://github.com/ReactTraining/react-router/issues/4105
 
-const store = createStore(reducer);
+const createStoreWithMiddleware = applyMiddleware(remoteActionMiddleware)(createStore);
+
+const store = createStoreWithMiddleware(reducer);
 store.dispatch(setState(
 	{
 		cart: [
