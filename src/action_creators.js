@@ -5,16 +5,19 @@ export function setState(state) {
 	};
 }
 
-export function addToCart(item) {
+export function addToCart(data) {
 	return {
 		type: 'ADD_TO_CART',
-		item
+		data,
+		remote: {
+			method: 'POST'
+		}
 	};
 }
 
-export function removeFromCart(item) {
+export function removeFromCart(data) {
 	return {
 		type: 'REMOVE_FROM_CART',
-		item
+		data
 	};
 }
