@@ -8,16 +8,20 @@ export function setState(state) {
 export function addToCart(data) {
 	return {
 		type: 'ADD_TO_CART',
-		data,
-		remote: {
-			method: 'POST'
-		}
+		data
 	};
 }
 
 export function removeFromCart(data) {
 	return {
 		type: 'REMOVE_FROM_CART',
+		data
+	};
+}
+
+export function getServices(data) {
+	return {
+		type: 'GET_SERVICES',
 		data
 	};
 }

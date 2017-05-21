@@ -76,36 +76,6 @@ export class ServiceInstance extends Component {
 						this.props.addToCart(serviceInstanceDetails); 
 					}
 				}
-
-				// onClick={() => {
-				// 	// TODO: Probably move all this logic elsewhere
-				// 	console.log(this.state);
-				// 	// TODO: save serviceId, cartId, scheduledDateTime
-
-				// 	const serviceInstance = {
-				// 		serviceId: this.props.match.params.serviceId,
-				// 		cartId: '2a', // user specific
-				// 		scheduledDateTime: this.state.scheduledDateTime
-				// 	};
-
-				// 	const options = {
-				// 		method: 'POST',
-				// 		headers: { 'Content-Type': 'application/json' },
-				// 		body: JSON.stringify(serviceInstance)
-				// 	};
-				// 	fetch('/api/serviceInstances', options)
-				// 	.then(() => {
-				// 		//let updatedTodos = this.state.todos.map(item => item);
-				// 		//updatedTodos.push(todo);
-				// 		//this.setState({ todos: updatedTodos });
-				// 		console.log('serviceInstance saved');
-				// 	})
-				// 	.catch((error) => {
-				// 		throw error;
-				// 	});
-
-				// }}
-
 			>
 				Submit
 			</Button>

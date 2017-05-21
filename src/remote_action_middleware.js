@@ -1,5 +1,8 @@
 const actionToApiMapping = {
-	'ADD_TO_CART': 'serviceInstances'
+	'ADD_TO_CART': {
+		target: 'serviceInstances',
+		method: 'POST'
+	}
 };
 
 export default store => next => action => {
@@ -7,15 +10,13 @@ export default store => next => action => {
 	console.log('in middleware');
 	console.log(action);
 
-	if(action.remote) {
-		if(action.remote.method === 'POST') {
-			console.log('POST');
-			postData(actionToApiMapping[action.type], action.data)
-		}
-		else if(action.remote.method === 'GET') {
-			console.log('GET');
+	const apiObj = actionToApiMapping[action.type]
+	if(apiObj) {
+		if(apiObj.method === 'POST') {
+			postData(apiObj.target, action.data);
 		}
 	}
+	//else if(apiObj.method === 'GET') {}
 
 	return next(action);
 }
