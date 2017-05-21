@@ -65,7 +65,8 @@ store.dispatch(setState(
 	{
 		cart: [
 			{
-				instanceId: 'abcd', // when order (combine instance list with product list)
+				//instanceId: 'abcd', // when order (combine instance list with product list)
+				instanceId: '62b8c09b-abbc-4317-8e3b-01c047fd7abc',
 				serviceId: 'mr1',
 				pictureKey: 'massage',
 				name: 'Massage',

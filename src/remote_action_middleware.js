@@ -1,7 +1,13 @@
+import 'whatwg-fetch'; //fetch
+
 const actionToApiMapping = {
 	'ADD_TO_CART': {
 		target: 'serviceInstances',
 		method: 'POST'
+	},
+	'REMOVE_FROM_CART': {
+		target: 'serviceInstances',
+		method: 'DELETE'
 	}
 };
 
@@ -15,18 +21,42 @@ export default store => next => action => {
 		if(apiObj.method === 'POST') {
 			postData(apiObj.target, action.data);
 		}
+		else if(apiObj.method === 'DELETE') {
+			removeData(apiObj.target, action.data);
+		}
 	}
 	//else if(apiObj.method === 'GET') {}
 
 	return next(action);
 }
 
-function postData(targetApi, data) {
-	const options = {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify(data)
+function createOptions(method, data) {
+	let options = {
+		method: method,
+		headers: { 'Content-Type': 'application/json' }
 	};
+	if(data) {
+		options.body = JSON.stringify(data);
+	}
+	return options;
+}
+
+function removeData(targetApi, data) {
+	const options = createOptions('DELETE', data);
+	fetch(`/api/${targetApi}`, options)
+	.then(() => {
+		//let updatedTodos = this.state.todos.map(item => item);
+		//updatedTodos.push(todo);
+		//this.setState({ todos: updatedTodos });
+		console.log('data removed');
+	})
+	.catch((error) => {
+		throw error;
+	});
+}
+
+function postData(targetApi, data) {
+	const options = createOptions('POST', data);
 	fetch(`/api/${targetApi}`, options)
 	.then(() => {
 		//let updatedTodos = this.state.todos.map(item => item);
