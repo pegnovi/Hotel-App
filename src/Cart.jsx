@@ -19,9 +19,16 @@ export class Cart extends Component {
 							accessor: 'instanceId',
 							component: ((props) => {
 								return <div>
-										<button onClick={() => { this.props.removeFromCart({serviceInstanceId: props.accessor}); }}>
-											Remove From Cart
-										</button>
+									<button
+										onClick={() => {
+											const serviceInstanceDetails = {
+												serviceInstanceId: props.accessor
+											};
+											this.props.removeFromCart(serviceInstanceDetails);
+										}
+									}>
+										Remove From Cart
+									</button>
 								</div>
 							}),
 							componentProps: {
