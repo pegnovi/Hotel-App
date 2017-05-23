@@ -45,9 +45,6 @@ function removeData(targetApi, data) {
 	const options = createOptions('DELETE', data);
 	fetch(`/api/${targetApi}`, options)
 	.then(() => {
-		//let updatedTodos = this.state.todos.map(item => item);
-		//updatedTodos.push(todo);
-		//this.setState({ todos: updatedTodos });
 		console.log('data removed');
 	})
 	.catch((error) => {
@@ -59,9 +56,6 @@ function postData(targetApi, data) {
 	const options = createOptions('POST', data);
 	fetch(`/api/${targetApi}`, options)
 	.then(() => {
-		//let updatedTodos = this.state.todos.map(item => item);
-		//updatedTodos.push(todo);
-		//this.setState({ todos: updatedTodos });
 		console.log('data saved');
 	})
 	.catch((error) => {
