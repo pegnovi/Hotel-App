@@ -14,13 +14,37 @@ module.exports = function(app) {
 
 	// Get all available services
 	app.get('/api/services', (req, res) => {
-		db.any('SELECT * from services')
-		.then((services) => {
-			res.send(services);
-		})
-		.catch(function(err) {
-			throw err;
-		});
+		// db.any('SELECT * from services')
+		// .then((services) => {
+		// 	res.send(services);
+		// })
+		// .catch(function(err) {
+		// 	throw err;
+		// });
+
+		// Temporary (while no DB available)
+		res.setHeader('Content-Type', 'application/json');
+		res.send(JSON.stringify({
+			"data": [
+				{
+					"instanceId": "abcd",
+					"serviceId": "mr1",
+					"pictureKey": "massage",
+					"name": "Massage",
+					"description": "A very rough massage",
+					"price": 26
+				},
+				{
+					"instanceId": "efgh",
+					"serviceId": "bib1",
+					"pictureKey": "breakfastInBed",
+					"name": "Breakfast in Bed",
+					"description": "You can choose from a menu",
+					"price": 41
+				}
+			]
+		}));
+
 	});
 
 	// Get all service instances
@@ -54,7 +78,7 @@ module.exports = function(app) {
 	});
 
 	app.delete('/api/serviceInstances', (req, res) => {
-		
+
 		console.log(JSON.stringify(req.body, null, 2));
 
 		db.none('DELETE FROM serviceInstances WHERE id = ${serviceInstanceId}',
@@ -74,7 +98,7 @@ module.exports = function(app) {
 
 
 	app.post('/api/services', (req, res) => {
-		
+
 		console.log(req.query);
 
 		querystring = `INSERT INTO services (id, name, description, price)

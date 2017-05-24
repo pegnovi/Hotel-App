@@ -1,3 +1,6 @@
+// Keep reducer as simple as possible
+// Reducer is only for updating client-side state
+
 function setState(state, newState) {
 	return newState;
 }
@@ -13,8 +16,15 @@ function removeFromCart(state, item) {
 	return state;
 }
 
+function getServices(state, action) {
+	console.log(action);
+	return state;
+}
+
 export default function(state = {cart: []}, action) {
 	switch(action.type) {
+		case 'GET_SERVICES':
+			return getServices(state, action);
 		case 'SET_STATE':
 			return setState(state, action.state);
 		case 'ADD_TO_CART':

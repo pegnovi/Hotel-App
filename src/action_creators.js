@@ -19,9 +19,8 @@ export function removeFromCart(data) {
 	};
 }
 
-export function getServices(data) {
+export function getServices() {
 	return {
-		type: 'GET_SERVICES',
-		data
+		type: 'GET_SERVICES'
 	};
 }

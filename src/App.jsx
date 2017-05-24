@@ -17,7 +17,7 @@ import Rooms from './Rooms';
 
 import reducer from './reducer';
 import remoteActionMiddleware from './remote_action_middleware';
-import { setState } from './action_creators';
+import { setState, getServices } from './action_creators';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
@@ -58,15 +58,22 @@ const myOrderList = [
 // By tchaffee
 // https://github.com/ReactTraining/react-router/issues/4105
 
-const createStoreWithMiddleware = applyMiddleware(remoteActionMiddleware)(createStore);
+// make reducers also take action functions (instead of just objects)
+// http://danmaz74.me/2015/08/19/from-flux-to-redux-async-actions-the-easy-way/
+
+// Middleware order in applyMiddleware is (1, 2, 3, ...)
+// So thunk should be last
+import thunk from 'redux-thunk';
+
+const createStoreWithMiddleware = applyMiddleware(remoteActionMiddleware, thunk)(createStore);
 
 const store = createStoreWithMiddleware(reducer);
+store.dispatch(getServices());
 store.dispatch(setState(
 	{
 		cart: [
 			{
-				//instanceId: 'abcd', // when order (combine instance list with product list)
-				instanceId: '62b8c09b-abbc-4317-8e3b-01c047fd7abc',
+				instanceId: 'abcd', // when order (combine instance list with product list)
 				serviceId: 'mr1',
 				pictureKey: 'massage',
 				name: 'Massage',
