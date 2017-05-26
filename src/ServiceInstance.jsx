@@ -31,12 +31,12 @@ export class ServiceInstance extends Component {
 
 		const chosenService = find(this.props.data,
 			(obj) => {
-				return obj.serviceId === this.props.match.params.serviceId;
+				return obj.id === this.props.match.params.id;
 			}
 		);
 
 		return <div>
-			Hello {this.props.match.params.serviceId}
+			Hello {this.props.match.params.id}
 
 			<br/>
 			{chosenService.name}
@@ -69,7 +69,7 @@ export class ServiceInstance extends Component {
 			<Button
 				onClick={() => { 
 						const serviceInstanceDetails = {
-							serviceId: this.props.match.params.serviceId,
+							serviceid: this.props.match.params.id,
 							cartId: '2a', // user specific
 							scheduledDateTime: this.state.scheduledDateTime
 						};
@@ -86,7 +86,7 @@ export class ServiceInstance extends Component {
 function mapStateToProps(state) {
 	console.log(state);
 	return {
-		data: state.cart
+		data: state.services
 	};
 }
 

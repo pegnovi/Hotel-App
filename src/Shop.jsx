@@ -16,7 +16,7 @@ export class Shop extends Component {
 					extraColumns={[
 						{
 							header: 'Action',
-							accessor: 'serviceId',
+							accessor: 'id',
 							component: ((props) => {
 								return <div>
 									<Link to={`/serviceInstance/${props.accessor}`}>
@@ -37,7 +37,7 @@ export class Shop extends Component {
 
 function mapStateToProps(state) {
 	return {
-		data: state.cart
+		data: state.services
 	}
 }
 

@@ -24,3 +24,9 @@ export function getServices() {
 		type: 'GET_SERVICES'
 	};
 }
+
+export function getServiceInstances() {
+	return {
+		type: 'GET_SERVICE_INSTANCES'
+	};
+}

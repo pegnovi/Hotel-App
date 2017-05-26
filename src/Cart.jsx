@@ -2,16 +2,35 @@ import React, { Component } from 'react';
 import ProductTable from './ProductTable';
 import { connect } from 'react-redux';
 
+import { find, cloneDeep } from 'lodash';
+
 import * as actionCreators from './action_creators';
 
 export class Cart extends Component {
 
 	render() {
+
+		let services = this.props.services;
+		let data = this.props.data;
+
+		let cartData = data.map((dataObj) => {
+			let targetService = find(services, (o) => o.id === dataObj.serviceid);
+			if(targetService) {
+				let nuDataObj = cloneDeep(targetService);
+				nuDataObj.instanceId = dataObj.id;
+				return nuDataObj;
+			}
+			return null;
+		});
+
+		console.log(cartData);
+
+
 		return (
 			<div>
 				<ProductTable
 					tableHeader={'Cart'}
-					data={this.props.data}
+					data={cartData}
 
 					extraColumns={[
 						{
@@ -43,6 +62,7 @@ export class Cart extends Component {
 
 function mapStateToProps(state) {
 	return {
+		services: state.services,
 		data: state.cart
 	}
 }

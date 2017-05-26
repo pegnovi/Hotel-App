@@ -5,7 +5,13 @@ import { setState } from './action_creators';
 const actionToApiMapping = {
 	'GET_SERVICES': {
 		target: 'services',
-		method: 'GET'
+		method: 'GET',
+		stateKey: 'services'
+	},
+	'GET_SERVICE_INSTANCES': {
+		target: 'serviceInstances',
+		method: 'GET',
+		stateKey: 'cart'
 	},
 	'ADD_TO_CART': {
 		target: 'serviceInstances',
@@ -30,7 +36,7 @@ export default store => next => action => {
 				.then(() => {
 					console.log(action.data);
 					dispatch(setState({
-						cart: action.data
+						[apiObj.stateKey]: action.data
 					}));
 				});
 

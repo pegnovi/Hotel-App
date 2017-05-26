@@ -17,7 +17,7 @@ import Rooms from './Rooms';
 
 import reducer from './reducer';
 import remoteActionMiddleware from './remote_action_middleware';
-import { setState, getServices } from './action_creators';
+import { setState, getServices, getServiceInstances } from './action_creators';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
@@ -69,6 +69,7 @@ const createStoreWithMiddleware = applyMiddleware(remoteActionMiddleware, thunk)
 
 const store = createStoreWithMiddleware(reducer);
 store.dispatch(getServices());
+store.dispatch(getServiceInstances());
 // store.dispatch(setState(
 // 	{
 // 		cart: [
@@ -134,7 +135,7 @@ class App extends Component {
 
 						<Route path="/test/:testText" component={TestParam}/>
 						<Route path="/shop/" component={ShopContainer}/>
-						<Route path="/serviceInstance/:serviceId" component={ServiceInstanceContainer}/>
+						<Route path="/serviceInstance/:id" component={ServiceInstanceContainer}/>
 						<Route path="/cart/" component={CartContainer}/>
 						<Route path="/orders/" render={() => <ProductTable
 								tableHeader={'Orders'}
