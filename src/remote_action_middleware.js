@@ -1,5 +1,7 @@
 import 'whatwg-fetch'; //fetch
 
+import { setState } from './action_creators';
+
 const actionToApiMapping = {
 	'GET_SERVICES': {
 		target: 'services',
@@ -27,6 +29,9 @@ export default store => next => action => {
 				getData(apiObj.target, action)
 				.then(() => {
 					console.log(action.data);
+					dispatch(setState({
+						cart: action.data
+					}));
 				});
 
 			});

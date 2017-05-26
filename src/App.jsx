@@ -69,28 +69,28 @@ const createStoreWithMiddleware = applyMiddleware(remoteActionMiddleware, thunk)
 
 const store = createStoreWithMiddleware(reducer);
 store.dispatch(getServices());
-store.dispatch(setState(
-	{
-		cart: [
-			{
-				instanceId: 'abcd', // when order (combine instance list with product list)
-				serviceId: 'mr1',
-				pictureKey: 'massage',
-				name: 'Massage',
-				description: 'A very rough massage',
-				price: 26
-			},
-			{
-				instanceId: 'efgh', // when order (combine instance list with product list)
-				serviceId: 'bib1',
-				pictureKey: 'breakfastInBed',
-				name: 'Breakfast in Bed',
-				description: 'You can choose from a menu',
-				price: 41
-			}
-		]
-	}
-));
+// store.dispatch(setState(
+// 	{
+// 		cart: [
+// 			{
+// 				instanceId: 'abcd', // when order (combine instance list with product list)
+// 				serviceId: 'mr1',
+// 				pictureKey: 'massage',
+// 				name: 'Massage',
+// 				description: 'A very rough massage',
+// 				price: 26
+// 			},
+// 			{
+// 				instanceId: 'efgh', // when order (combine instance list with product list)
+// 				serviceId: 'bib1',
+// 				pictureKey: 'breakfastInBed',
+// 				name: 'Breakfast in Bed',
+// 				description: 'You can choose from a menu',
+// 				price: 41
+// 			}
+// 		]
+// 	}
+// ));
 
 class App extends Component {
 	constructor(props) {

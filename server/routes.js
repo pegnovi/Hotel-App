@@ -10,52 +10,84 @@ const db = pgp({
 	port: process.env.PG_PORT
 });
 
+const hasDB = true;
+
 module.exports = function(app) {
 
 	// Get all available services
 	app.get('/api/services', (req, res) => {
-		// db.any('SELECT * from services')
-		// .then((services) => {
-		// 	res.send(services);
-		// })
-		// .catch(function(err) {
-		// 	throw err;
-		// });
 
-		// Temporary (while no DB available)
-		res.setHeader('Content-Type', 'application/json');
-		res.send(JSON.stringify({
-			"data": [
-				{
-					"instanceId": "abcd",
-					"serviceId": "mr1",
-					"pictureKey": "massage",
-					"name": "Massage",
-					"description": "A very rough massage",
-					"price": 26
-				},
-				{
-					"instanceId": "efgh",
-					"serviceId": "bib1",
-					"pictureKey": "breakfastInBed",
-					"name": "Breakfast in Bed",
-					"description": "You can choose from a menu",
-					"price": 41
-				}
-			]
-		}));
+		if(hasDB) {
+			db.any('SELECT * from services')
+			.then((services) => {
+				res.send(services);
+			})
+			.catch(function(err) {
+				throw err;
+			});
+		}
+		else {
+			// Temporary (while no DB available)
+			res.setHeader('Content-Type', 'application/json');
+			res.send(JSON.stringify({
+				"data": [
+					{
+						"instanceId": "abcd",
+						"serviceId": "mr1",
+						"pictureKey": "massage",
+						"name": "Massage",
+						"description": "A very rough massage",
+						"price": 26
+					},
+					{
+						"instanceId": "efgh",
+						"serviceId": "bib1",
+						"pictureKey": "breakfastInBed",
+						"name": "Breakfast in Bed",
+						"description": "You can choose from a menu",
+						"price": 41
+					}
+				]
+			}));
+		}
 
 	});
 
 	// Get all service instances
 	app.get('/api/serviceInstances', (req, res) => {
-		db.any('SELECT * from serviceInstances')
-		.then((serviceInstances) => {
-			res.send(serviceInstances);
-		})
-		.catch(function(err) {
-			throw err;
-		});
+		if(hasDB) {
+			db.any('SELECT * from serviceInstances')
+			.then((serviceInstances) => {
+				res.send(serviceInstances);
+			})
+			.catch(function(err) {
+				throw err;
+			});
+		}
+		else {
+			// Temporary (while no DB available)
+			res.setHeader('Content-Type', 'application/json');
+			res.send(JSON.stringify({
+				"data": [
+					{
+						"instanceId": "abcd",
+						"serviceId": "mr1",
+						"pictureKey": "massage",
+						"name": "Massage",
+						"description": "A very rough massage",
+						"price": 26
+					},
+					{
+						"instanceId": "efgh",
+						"serviceId": "bib1",
+						"pictureKey": "breakfastInBed",
+						"name": "Breakfast in Bed",
+						"description": "You can choose from a menu",
+						"price": 41
+					}
+				]
+			}));
+		}
 	});
 
 	// Post new service instance
