@@ -69,7 +69,7 @@ export class ServiceInstance extends Component {
 			<Button
 				onClick={() => { 
 						const serviceInstanceDetails = {
-							serviceid: this.props.match.params.id,
+							serviceId: this.props.match.params.id,
 							cartId: '2a', // user specific
 							scheduledDateTime: this.state.scheduledDateTime
 						};

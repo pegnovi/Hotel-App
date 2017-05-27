@@ -35,7 +35,7 @@ export class Cart extends Component {
 					extraColumns={[
 						{
 							header: 'Action',
-							accessor: 'instanceId',
+							accessor: 'id',
 							component: ((props) => {
 								return <div>
 									<button

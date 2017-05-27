@@ -11,7 +11,7 @@ export default class ProductTable extends Component {
 		const columns = [
 			{
 				header: 'Picture',
-				accessor: 'picturekey',
+				accessor: 'pictureKey',
 				render: props => <ProductImage pictureKey={props.value}/>
 			},
 			{

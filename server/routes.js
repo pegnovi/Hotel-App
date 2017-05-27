@@ -1,3 +1,6 @@
+const camelcaseKeys = require('camelcase-keys');
+const _ = require('lodash');
+
 const pgp = require('pg-promise')();
 
 const db = pgp({
@@ -20,7 +23,11 @@ module.exports = function(app) {
 		if(hasDB) {
 			db.any('SELECT * from services')
 			.then((services) => {
-				res.send(services);
+				res.send(
+					_.map(services, (service) => {
+						return camelcaseKeys(service);
+					})
+				);
 			})
 			.catch(function(err) {
 				throw err;
@@ -58,7 +65,11 @@ module.exports = function(app) {
 		if(hasDB) {
 			db.any('SELECT * from serviceInstances')
 			.then((serviceInstances) => {
-				res.send(serviceInstances);
+				res.send(
+					_.map(serviceInstances, (serviceInstance) => {
+						return camelcaseKeys(serviceInstance);
+					})
+				);
 			})
 			.catch(function(err) {
 				throw err;
@@ -94,7 +105,7 @@ module.exports = function(app) {
 	app.post('/api/serviceInstances', (req, res) => {
 
 		// TODO: check if valid serviceId and cartId
-		db.none('INSERT INTO serviceInstances (serviceId, cartId, scheduledDateTime) VALUES (${serviceId}, ${cartId}, ${scheduledDateTime})',
+		db.none('INSERT INTO serviceInstances (service_id, cart_id, scheduled_date_time) VALUES (${serviceId}, ${cartId}, ${scheduledDateTime})',
 				{
 					serviceId: req.body.serviceId,
 					cartId: req.body.cartId,
