@@ -65,7 +65,10 @@ const myOrderList = [
 // So thunk should be last
 import thunk from 'redux-thunk';
 
-const createStoreWithMiddleware = applyMiddleware(remoteActionMiddleware, thunk)(createStore);
+const createStoreWithMiddleware = applyMiddleware(
+	//remoteActionMiddleware,
+	thunk)
+(createStore);
 
 const store = createStoreWithMiddleware(reducer);
 store.dispatch(getServices());

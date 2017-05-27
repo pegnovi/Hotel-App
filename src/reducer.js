@@ -12,10 +12,8 @@ function setState(state, newState) {
 	return finalState;
 }
 
-function addToCart(state, item) {
-	console.log(item);
-	console.log('ADD TO CART');
-	state.cart.push(item);
+function setToCart(state, serviceInstance) {
+	state.cart.push(serviceInstance);
 	return state;
 }
 
@@ -25,19 +23,26 @@ function removeFromCart(state, item) {
 	return state;
 }
 
-function getServices(state, action) {
-	console.log(action);
+
+function setServices(state, action) {
+	state.services = action.data;
+	return state;
+}
+function setServiceInstances(state, action) {
+	state.cart = action.data;
 	return state;
 }
 
 export default function(state = {cart: []}, action) {
 	switch(action.type) {
-		case 'GET_SERVICES':
-			return getServices(state, action);
+		case 'SET_SERVICES':
+			return setServices(state, action);
+		case 'SET_SERVICE_INSTANCES':
+			return setServiceInstances(state, action);
+		case 'SET_TO_CART':
+			return setToCart(state, action.data);
 		case 'SET_STATE':
 			return setState(state, action.state);
-		case 'ADD_TO_CART':
-			return addToCart(state, action.data);
 		case 'REMOVE_FROM_CART':
 			return removeFromCart(state, action.data);
 		default:
