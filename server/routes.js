@@ -104,16 +104,18 @@ module.exports = function(app) {
 	// Post new service instance
 	app.post('/api/serviceInstances', (req, res) => {
 
+		console.log(req.body);
+
 		// TODO: check if valid serviceId and cartId
-		db.none('INSERT INTO serviceInstances (service_id, cart_id, scheduled_date_time) VALUES (${serviceId}, ${cartId}, ${scheduledDateTime})',
+		db.one('INSERT INTO serviceInstances (service_id, cart_id, scheduled_date_time) VALUES (${serviceId}, ${cartId}, ${scheduledDateTime}) RETURNING id',
 				{
 					serviceId: req.body.serviceId,
 					cartId: req.body.cartId,
 					scheduledDateTime: req.body.scheduledDateTime
 				}
 		)
-		.then(() => {
-			res.send('Saved service instance');
+		.then((data) => {
+			res.send(camelcaseKeys(data));
 		})
 		.catch(function(err) {
 			throw err;

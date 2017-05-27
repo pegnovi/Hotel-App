@@ -15,7 +15,8 @@ const actionToApiMapping = {
 	},
 	'ADD_TO_CART': {
 		target: 'serviceInstances',
-		method: 'POST'
+		method: 'POST',
+		stateKey: 'cart'
 	},
 	'REMOVE_FROM_CART': {
 		target: 'serviceInstances',
@@ -34,7 +35,6 @@ export default store => next => action => {
 			return next((dispatch) => {
 				getData(apiObj.target, action)
 				.then(() => {
-					console.log(action.data);
 					dispatch(setState({
 						[apiObj.stateKey]: action.data
 					}));
@@ -43,8 +43,15 @@ export default store => next => action => {
 			});
 		}
 		else if(apiObj.method === 'POST') {
-			postData(apiObj.target, action.data);
-			return next(action);
+			return next((dispatch) => {
+				postData(apiObj.target, action.data)
+				.then(() => {
+					console.log(action.data);
+					dispatch(setState({
+						cart: [action.data]
+					}));
+				});
+			});
 		}
 		else if(apiObj.method === 'DELETE') {
 			removeData(apiObj.target, action.data);
@@ -97,9 +104,14 @@ function removeData(targetApi, data) {
 
 function postData(targetApi, data) {
 	const options = createOptions('POST', data);
-	fetch(`/api/${targetApi}`, options)
-	.then(() => {
+	return fetch(`/api/${targetApi}`, options)
+	.then((response) => {
 		console.log('data saved');
+		return response.json();
+		
+	})
+	.then((responseObj) => {
+		data.id = responseObj.id;
 	})
 	.catch((error) => {
 		throw error;

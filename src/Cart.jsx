@@ -14,7 +14,7 @@ export class Cart extends Component {
 		let data = this.props.data;
 
 		let cartData = data.map((dataObj) => {
-			let targetService = find(services, (o) => o.id === dataObj.serviceid);
+			let targetService = find(services, (o) => o.id === dataObj.serviceId);
 			if(targetService) {
 				let nuDataObj = cloneDeep(targetService);
 				nuDataObj.instanceId = dataObj.id;
