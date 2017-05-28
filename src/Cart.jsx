@@ -13,7 +13,6 @@ export class Cart extends Component {
 		let services = this.props.services;
 		let data = this.props.data;
 
-		// Actual cart data is build here so maybe that's why removal doesn't update on the UI unless re-entering cart page
 		let cartData = data.map((dataObj) => {
 			let targetService = find(services, (o) => o.id === dataObj.serviceId);
 			if(targetService) {
