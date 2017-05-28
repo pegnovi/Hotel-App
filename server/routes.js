@@ -126,9 +126,9 @@ module.exports = function(app) {
 
 		console.log(JSON.stringify(req.body, null, 2));
 
-		db.none('DELETE FROM serviceInstances WHERE id = ${serviceInstanceId}',
+		db.none('DELETE FROM serviceInstances WHERE id = ${instanceId}',
 			{
-				serviceInstanceId: req.body.serviceInstanceId
+				instanceId: req.body.instanceId
 			}
 		)
 		.then(() => {

@@ -16,8 +16,8 @@ import { ShopContainer } from './Shop';
 import Rooms from './Rooms';
 
 import reducer from './reducer';
-import remoteActionMiddleware from './remote_action_middleware';
-import { getServices, getServiceInstances } from './action_creators';
+//import remoteActionMiddleware from './remote_action_middleware';
+import { setState, getServices, getServiceInstances } from './action_creators';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
@@ -35,24 +35,34 @@ const TestParam = ({match}) => {
 
 
 // TODO: Query for this later
-const myOrderList = [
-	{
-		instanceId: 'abcd', // when order (combine instance list with product list)
-		serviceId: 'mr1',
-		pictureKey: 'massage',
-		name: 'Massage',
-		description: 'A very rough massage',
-		price: 26
-	},
-	{
-		instanceId: 'efgh', // when order (combine instance list with product list)
-		serviceId: 'bib1',
-		pictureKey: 'breakfastInBed',
-		name: 'Breakfast in Bed',
-		description: 'You can choose from a menu',
-		price: 41
-	}
-];
+const myOrderList = {
+	services: [
+		{
+			id: 'mr1',
+			pictureKey: 'massage',
+			name: 'Massage',
+			description: 'A very rough massage',
+			price: 26
+		},
+		{
+			id: 'bib1',
+			pictureKey: 'breakfastInBed',
+			name: 'Breakfast in Bed',
+			description: 'You can choose from a menu',
+			price: 41
+		}
+	],
+	cart: [
+		{
+			id: 'abcd', // when order (combine instance list with product list)
+			serviceId: 'mr1'
+		},
+		{
+			id: 'efgh', // when order (combine instance list with product list)
+			serviceId: 'bib1'
+		}
+	]
+};
 
 // Passing props to Route components
 // By tchaffee
@@ -73,6 +83,7 @@ const createStoreWithMiddleware = applyMiddleware(
 const store = createStoreWithMiddleware(reducer);
 store.dispatch(getServices());
 store.dispatch(getServiceInstances());
+//store.dispatch(setState(myOrderList));
 
 
 class App extends Component {

@@ -1,7 +1,7 @@
 // Keep reducer as simple as possible
 // Reducer is only for updating client-side state
 
-import { remove } from 'lodash';
+import { remove, cloneDeep } from 'lodash';
 
 function setState(state, newState) {
 	
@@ -13,27 +13,32 @@ function setState(state, newState) {
 }
 
 function setToCart(state, serviceInstance) {
-	state.cart.push(serviceInstance);
-	return state;
+	console.log('ADD TO CART');
+	let nextState = cloneDeep(state);
+	nextState.cart.push(serviceInstance);
+	return nextState;
 }
 
 function removeFromCart(state, item) {
 	console.log('REMOVE FROM CART');
-	remove(state.cart, (cartObj) => cartObj.id === item.serviceInstanceId);
-	return state;
+	let nextState = cloneDeep(state);
+	remove(nextState.cart, (cartObj) => cartObj.id === item.instanceId);
+	return nextState;
 }
 
 
 function setServices(state, action) {
-	state.services = action.data;
-	return state;
+	let nextState = cloneDeep(state);
+	nextState.services = action.data;
+	return nextState;
 }
 function setServiceInstances(state, action) {
-	state.cart = action.data;
-	return state;
+	let nextState = cloneDeep(state);
+	nextState.cart = action.data;
+	return nextState;
 }
 
-export default function(state = {cart: []}, action) {
+export default function(state = {services: [], cart: []}, action) {
 	switch(action.type) {
 		case 'SET_SERVICES':
 			return setServices(state, action);

@@ -84,7 +84,6 @@ export class ServiceInstance extends Component {
 }
 
 function mapStateToProps(state) {
-	console.log(state);
 	return {
 		data: state.services
 	};

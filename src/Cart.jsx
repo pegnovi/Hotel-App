@@ -42,7 +42,7 @@ export class Cart extends Component {
 									<button
 										onClick={() => {
 											const serviceInstanceDetails = {
-												serviceInstanceId: props.accessor
+												instanceId: props.accessor
 											};
 											this.props.removeFromCart(serviceInstanceDetails);
 										}
