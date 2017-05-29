@@ -3,42 +3,31 @@
 
 import { remove, cloneDeep } from 'lodash';
 
+import { Map, List, fromJS } from 'immutable';
+
 function setState(state, newState) {
-	
-	let finalState = Object.assign(state, newState);
-
-	console.log(finalState);
-
-	return finalState;
+	return state.merge(newState);
 }
 
 function setToCart(state, serviceInstance) {
 	console.log('ADD TO CART');
-	let nextState = cloneDeep(state);
-	nextState.cart.push(serviceInstance);
-	return nextState;
+	return state.update('cart', (cart) => cart.push(serviceInstance));
 }
 
 function removeFromCart(state, item) {
 	console.log('REMOVE FROM CART');
-	let nextState = cloneDeep(state);
-	remove(nextState.cart, (cartObj) => cartObj.id === item.instanceId);
-	return nextState;
+	return state.update('cart', (cart) => cart.filterNot((cartItem) => cartItem.id === item.instanceId));
 }
 
 
 function setServices(state, action) {
-	let nextState = cloneDeep(state);
-	nextState.services = action.data;
-	return nextState;
+	return state.set('services', fromJS(action.data));
 }
 function setServiceInstances(state, action) {
-	let nextState = cloneDeep(state);
-	nextState.cart = action.data;
-	return nextState;
+	return state.set('cart', fromJS(action.data));
 }
 
-export default function(state = {services: [], cart: []}, action) {
+export default function(state = fromJS({services: [], cart: []}), action) {
 	switch(action.type) {
 		case 'SET_SERVICES':
 			return setServices(state, action);

@@ -6,12 +6,14 @@ import { find, cloneDeep } from 'lodash';
 
 import * as actionCreators from './action_creators';
 
+import { toJS } from 'immutable';
+
 export class Cart extends Component {
 
 	render() {
 
-		let services = this.props.services;
-		let data = this.props.data;
+		let services = this.props.services.toJS();
+		let data = this.props.data.toJS();
 
 		let cartData = data.map((dataObj) => {
 			let targetService = find(services, (o) => o.id === dataObj.serviceId);
@@ -62,8 +64,8 @@ export class Cart extends Component {
 
 function mapStateToProps(state) {
 	return {
-		services: state.services,
-		data: state.cart
+		services: state.get('services'),
+		data: state.get('cart')
 	}
 }
 

@@ -11,6 +11,8 @@ import { find } from 'lodash';
 import * as actionCreators from './action_creators';
 import { connect } from 'react-redux';
 
+import { toJS } from 'immutable';
+
 // TODO: Form input validation (validationState)
 // TODO: Form value saving (onChange handler to set state)
 
@@ -29,7 +31,7 @@ export class ServiceInstance extends Component {
 	}
 	render() {
 
-		const chosenService = find(this.props.data,
+		const chosenService = find(this.props.data.toJS(),
 			(obj) => {
 				return obj.id === this.props.match.params.id;
 			}
@@ -85,7 +87,7 @@ export class ServiceInstance extends Component {
 
 function mapStateToProps(state) {
 	return {
-		data: state.services
+		data: state.get('services')
 	};
 }
 

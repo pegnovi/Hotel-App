@@ -3,6 +3,8 @@ import ProductTable from './ProductTable';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import { toJS } from 'immutable';
+
 export class Shop extends Component {
 
 	render() {
@@ -11,7 +13,7 @@ export class Shop extends Component {
 				<ProductTable
 					tableHeader={'Shop'}
 					//data={this.state.services}
-					data={this.props.data}
+					data={this.props.data.toJS()}
 
 					extraColumns={[
 						{
@@ -37,7 +39,7 @@ export class Shop extends Component {
 
 function mapStateToProps(state) {
 	return {
-		data: state.services
+		data: state.get('services')
 	}
 }
 
