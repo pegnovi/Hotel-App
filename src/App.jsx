@@ -5,24 +5,29 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import CustomNavigationBar from './CustomNavigationBar';
+import CustomNavigationBar from './components/CustomNavigationBar';
+import ProductTable from './components/ProductTable';
+import { CartContainer } from './components/Cart';
+import { ShopContainer } from './components/Shop';
+import { ServiceInstanceContainer } from './components/ServiceInstance';
 
-import { ServiceInstanceContainer } from './ServiceInstance';
+import Rooms from './components/Rooms';
 
-import ProductTable from './ProductTable';
-import { CartContainer } from './Cart';
-import { ShopContainer } from './Shop';
+import cartReducer from './reducers/cart_reducer';
+import serviceReducer from './reducers/service_reducer';
+import regularReducer from './reducers/regular_reducer';
+import reducer from './reducers/reducer';
 
-import Rooms from './Rooms';
-
-import reducer from './reducer';
 //import remoteActionMiddleware from './remote_action_middleware';
-import { setState, getServices, getServiceInstances } from './action_creators';
+import { setState } from './actions/regular_actions';
+import { getServices } from './actions/service_actions';
+import { getServiceInstances } from './actions/cart_actions';
+
+import { combineReducers } from 'redux-immutable';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
-import 'whatwg-fetch'; //fetch
-
+import { fromJS } from 'immutable';
 
 const TestParam = ({match}) => {
 	return (
@@ -80,7 +85,22 @@ const createStoreWithMiddleware = applyMiddleware(
 	thunk)
 (createStore);
 
-const store = createStoreWithMiddleware(reducer);
+const initialState = fromJS({
+	services: [],
+	cart: []
+});
+// https://bumbu.github.io/redux-combinereducers-for-immutable-js/
+const rootReducer = combineReducers({
+		cartReducer,
+		serviceReducer,
+		regularReducer
+	}
+);
+// https://github.com/gajus/redux-immutable
+
+//const store = createStoreWithMiddleware(reducer);
+const store = createStoreWithMiddleware(rootReducer, initialState);
+console.log(store.getState());
 store.dispatch(getServices());
 store.dispatch(getServiceInstances());
 //store.dispatch(setState(myOrderList));
@@ -90,27 +110,13 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			services: [],
-			cart: []
-		};
+		this.state = fromJS(
+			{
+				services: [],
+				cart: []
+			}
+		);
 	}
-
-	componentDidMount() {
-		// fetch('/api/services')
-		// .then((response) => {
-		// 	return response.json();
-		// })
-		// .then((services) => {
-		// 	this.setState({
-		// 		services: services
-		// 	})
-		// })
-		// .catch((error) => {
-		// 	throw error;
-		// });
-	}
-
 	render() {
 		return (
 			<Provider store={store}>

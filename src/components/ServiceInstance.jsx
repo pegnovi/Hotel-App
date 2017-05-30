@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 
 import { Button } from 'react-bootstrap';
 
-import 'whatwg-fetch'; //fetch
-
 import { FieldGroup, FieldGroupDateTime } from './FieldGroup';
 
 import { find } from 'lodash';
 
-import * as actionCreators from './action_creators';
+import * as cartActions from '../actions/cart_actions';
 import { connect } from 'react-redux';
 
 import { toJS } from 'immutable';
@@ -93,5 +91,5 @@ function mapStateToProps(state) {
 
 export const ServiceInstanceContainer = connect(
 	mapStateToProps,
-	actionCreators
+	cartActions
 )(ServiceInstance);

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { find, cloneDeep } from 'lodash';
 
-import * as actionCreators from './action_creators';
+import * as cartActions from '../actions/cart_actions';
 
 import { toJS } from 'immutable';
 
@@ -71,5 +71,5 @@ function mapStateToProps(state) {
 
 export const CartContainer = connect(
 	mapStateToProps,
-	actionCreators
+	cartActions
 )(Cart);
