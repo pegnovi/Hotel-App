@@ -1,3 +1,6 @@
+const camelcaseKeys = require('camelcase-keys');
+const _ = require('lodash');
+
 const pgp = require('pg-promise')();
 
 const db = pgp({
@@ -10,43 +13,109 @@ const db = pgp({
 	port: process.env.PG_PORT
 });
 
+const hasDB = true;
+
 module.exports = function(app) {
 
 	// Get all available services
 	app.get('/api/services', (req, res) => {
-		db.any('SELECT * from services')
-		.then((services) => {
-			res.send(services);
-		})
-		.catch(function(err) {
-			throw err;
-		});
+
+		if(hasDB) {
+			db.any('SELECT * from services')
+			.then((services) => {
+				res.send(
+					_.map(services, (service) => {
+						return camelcaseKeys(service);
+					})
+				);
+			})
+			.catch(function(err) {
+				throw err;
+			});
+		}
+		else {
+			// Temporary (while no DB available)
+			res.setHeader('Content-Type', 'application/json');
+			res.send(JSON.stringify({
+				"data": [
+					{
+						"instanceId": "abcd",
+						"serviceId": "mr1",
+						"pictureKey": "massage",
+						"name": "Massage",
+						"description": "A very rough massage",
+						"price": 26
+					},
+					{
+						"instanceId": "efgh",
+						"serviceId": "bib1",
+						"pictureKey": "breakfastInBed",
+						"name": "Breakfast in Bed",
+						"description": "You can choose from a menu",
+						"price": 41
+					}
+				]
+			}));
+		}
+
 	});
 
 	// Get all service instances
 	app.get('/api/serviceInstances', (req, res) => {
-		db.any('SELECT * from serviceInstances')
-		.then((serviceInstances) => {
-			res.send(serviceInstances);
-		})
-		.catch(function(err) {
-			throw err;
-		});
+		if(hasDB) {
+			db.any('SELECT * from serviceInstances')
+			.then((serviceInstances) => {
+				res.send(
+					_.map(serviceInstances, (serviceInstance) => {
+						return camelcaseKeys(serviceInstance);
+					})
+				);
+			})
+			.catch(function(err) {
+				throw err;
+			});
+		}
+		else {
+			// Temporary (while no DB available)
+			res.setHeader('Content-Type', 'application/json');
+			res.send(JSON.stringify({
+				"data": [
+					{
+						"instanceId": "abcd",
+						"serviceId": "mr1",
+						"pictureKey": "massage",
+						"name": "Massage",
+						"description": "A very rough massage",
+						"price": 26
+					},
+					{
+						"instanceId": "efgh",
+						"serviceId": "bib1",
+						"pictureKey": "breakfastInBed",
+						"name": "Breakfast in Bed",
+						"description": "You can choose from a menu",
+						"price": 41
+					}
+				]
+			}));
+		}
 	});
 
 	// Post new service instance
 	app.post('/api/serviceInstances', (req, res) => {
 
+		console.log(req.body);
+
 		// TODO: check if valid serviceId and cartId
-		db.none('INSERT INTO serviceInstances (serviceId, cartId, scheduledDateTime) VALUES (${serviceId}, ${cartId}, ${scheduledDateTime})',
+		db.one('INSERT INTO serviceInstances (service_id, cart_id, scheduled_date_time) VALUES (${serviceId}, ${cartId}, ${scheduledDateTime}) RETURNING id',
 				{
 					serviceId: req.body.serviceId,
 					cartId: req.body.cartId,
 					scheduledDateTime: req.body.scheduledDateTime
 				}
 		)
-		.then(() => {
-			res.send('Saved service instance');
+		.then((data) => {
+			res.send(camelcaseKeys(data));
 		})
 		.catch(function(err) {
 			throw err;
@@ -54,12 +123,12 @@ module.exports = function(app) {
 	});
 
 	app.delete('/api/serviceInstances', (req, res) => {
-		
+
 		console.log(JSON.stringify(req.body, null, 2));
 
-		db.none('DELETE FROM serviceInstances WHERE id = ${serviceInstanceId}',
+		db.none('DELETE FROM serviceInstances WHERE id = ${instanceId}',
 			{
-				serviceInstanceId: req.body.serviceInstanceId
+				instanceId: req.body.instanceId
 			}
 		)
 		.then(() => {
@@ -74,7 +143,7 @@ module.exports = function(app) {
 
 
 	app.post('/api/services', (req, res) => {
-		
+
 		console.log(req.query);
 
 		querystring = `INSERT INTO services (id, name, description, price)
