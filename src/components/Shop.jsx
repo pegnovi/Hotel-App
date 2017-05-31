@@ -39,8 +39,6 @@ export class Shop extends Component {
 }
 
 function mapStateToProps(state) {
-	console.log(state);
-	console.log(state.toJS());
 	return {
 		data: state.get('services')
 	}

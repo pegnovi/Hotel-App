@@ -91,8 +91,8 @@ const initialState = fromJS({
 });
 // https://bumbu.github.io/redux-combinereducers-for-immutable-js/
 const rootReducer = combineReducers({
-		cartReducer,
-		serviceReducer,
+		cart: cartReducer,
+		services: serviceReducer,
 		regularReducer
 	}
 );

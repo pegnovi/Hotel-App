@@ -1,20 +1,20 @@
 import { Map, List, fromJS } from 'immutable';
 
 function setServiceInstances(state, action) {
-	return state.set('cart', fromJS(action.data));
+	return state.merge(fromJS(action.data));
 }
 
 function setToCart(state, action) {
 	console.log('ADD TO CART');
-	return state.update('cart', (cart) => cart.push(action.data));
+	return state.push(action.data);
 }
 
 function removeFromCart(state, action) {
 	console.log('REMOVE FROM CART');
-	return state.update('cart', (cart) => cart.filterNot((cartItem) => cartItem.id === action.data.instanceId));
+	return state.filterNot((cartItem) => cartItem.id === action.data.instanceId);
 }
 
-export default function(state = fromJS({services: [], cart: []}), action) {
+export default function(state = fromJS([]), action) {
 	switch(action.type) {
 		case 'SET_SERVICE_INSTANCES':
 			return setServiceInstances(state, action);
