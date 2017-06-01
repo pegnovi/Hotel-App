@@ -8,6 +8,7 @@ import './App.css';
 import CustomNavigationBar from './components/CustomNavigationBar';
 import ProductTable from './components/ProductTable';
 import { CartContainer } from './components/Cart';
+import { CheckoutContainer } from './components/Checkout';
 import { ShopContainer } from './components/Shop';
 import { ServiceInstanceContainer } from './components/ServiceInstance';
 
@@ -136,6 +137,7 @@ class App extends Component {
 						<Route path="/shop/" component={ShopContainer}/>
 						<Route path="/serviceInstance/:id" component={ServiceInstanceContainer}/>
 						<Route path="/cart/" component={CartContainer}/>
+						<Route path="/checkout" component={CheckoutContainer}/>
 						<Route path="/orders/" render={() => <ProductTable
 								tableHeader={'Orders'}
 								tableType={'orders'}

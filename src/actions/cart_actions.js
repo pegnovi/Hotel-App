@@ -1,5 +1,14 @@
 import { getData, postData, removeData } from './requestHelper';
 
+export function buyServices(serviceInstances) {
+	return (dispatch) => {
+		postData('orders', serviceInstances)
+		.then(() => {
+			// Dispatch action that adds serviceInstances to orders array
+		})
+	}
+}
+
 export function setServiceInstances(serviceInstances) {
 	return {
 		type: 'SET_SERVICE_INSTANCES',

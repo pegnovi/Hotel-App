@@ -17,6 +17,10 @@ const hasDB = true;
 
 module.exports = function(app) {
 
+	app.post('/api/orders', (req, res) => {
+		res.send({test: 'order submitted'});
+	});
+
 	// Get all available services
 	app.get('/api/services', (req, res) => {
 
