@@ -18,8 +18,9 @@ const hasDB = true;
 
 module.exports = function(app) {
 
-	app.post('/api/orders', (req, res) => {
-		req.
+	//https://stackoverflow.com/questions/37300997/multi-row-insert-with-pg-promise
+	app.put('/api/orders', (req, res) => {
+		var serviceInstances = req.body;
 		res.send({test: 'order submitted'});
 	});
 

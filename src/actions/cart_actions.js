@@ -1,8 +1,8 @@
-import { getData, postData, removeData } from './requestHelper';
+import { getData, postData, updateData, removeData } from './requestHelper';
 
 export function buyServices(serviceInstances) {
 	return (dispatch) => {
-		postData('orders', serviceInstances)
+		updateData('orders', serviceInstances)
 		.then((response) => {
 			console.log(response);
 			// Dispatch action that adds serviceInstances to orders array
