@@ -21,7 +21,34 @@ module.exports = function(app) {
 	//https://stackoverflow.com/questions/37300997/multi-row-insert-with-pg-promise
 	app.put('/api/orders', (req, res) => {
 		var serviceInstances = req.body;
-		res.send({test: 'order submitted'});
+
+		var cs = new pgp.helpers.ColumnSet([
+			{
+				name: 'id',
+				//cast: 'text',
+				cnd: true
+			},
+			//'?id',
+			'purchased'
+		]);
+
+		//var cs = new pgp.helpers.ColumnSet();
+		var values = req.body.map((serviceInstance) => {
+			return {
+				id: serviceInstance.id,
+				purchased: true
+			};
+		})
+
+		var query = pgp.helpers.update(values, cs, 'serviceinstances') + ' WHERE v.id = t.id::text';
+		console.log(query);
+		db.none(query).
+		then(() => {
+			res.send({test: 'order submitted'});
+		})
+		.catch(function(err) {
+			throw err;
+		});
 	});
 
 	// Get all available services
