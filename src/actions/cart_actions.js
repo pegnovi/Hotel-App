@@ -3,7 +3,8 @@ import { getData, postData, removeData } from './requestHelper';
 export function buyServices(serviceInstances) {
 	return (dispatch) => {
 		postData('orders', serviceInstances)
-		.then(() => {
+		.then((response) => {
+			console.log(response);
 			// Dispatch action that adds serviceInstances to orders array
 		})
 	}

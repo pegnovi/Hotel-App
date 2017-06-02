@@ -39,17 +39,10 @@ CREATE TABLE serviceInstances(
 	cart_id character varying,
 	service_id character varying,
 	scheduled_date_time timestamp without time zone,
+	purchased boolean,
 	PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS orders;
-
-CREATE TABLE orders(
-	id uuid DEFAULT uuid_generate_v4 (),
-	service_instance_id character varying,
-	user_id character varying,
-	PRIMARY KEY (id)
-);
 
 /* TODO?:
 	Probably don't need this.
