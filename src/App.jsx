@@ -41,7 +41,7 @@ const TestParam = ({match}) => {
 
 
 // TODO: Query for this later
-const myOrderList = {
+const myOrderList = fromJS({
 	services: [
 		{
 			id: 'mr1',
@@ -68,7 +68,7 @@ const myOrderList = {
 			serviceId: 'bib1'
 		}
 	]
-};
+});
 
 // Passing props to Route components
 // By tchaffee
@@ -100,10 +100,10 @@ const rootReducer = combineReducers({
 // https://github.com/gajus/redux-immutable
 
 //const store = createStoreWithMiddleware(reducer);
-const store = createStoreWithMiddleware(rootReducer, initialState);
+const store = createStoreWithMiddleware(rootReducer, myOrderList);
 console.log(store.getState());
-store.dispatch(getServices());
-store.dispatch(getServiceInstances());
+// store.dispatch(getServices());
+// store.dispatch(getServiceInstances());
 //store.dispatch(setState(myOrderList));
 
 
