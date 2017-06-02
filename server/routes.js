@@ -1,6 +1,7 @@
 const camelcaseKeys = require('camelcase-keys');
 const _ = require('lodash');
 
+// Guard Against SQL injection later (try postgres prepared statements)
 const pgp = require('pg-promise')();
 
 const db = pgp({
@@ -18,6 +19,7 @@ const hasDB = true;
 module.exports = function(app) {
 
 	app.post('/api/orders', (req, res) => {
+		req.
 		res.send({test: 'order submitted'});
 	});
 
