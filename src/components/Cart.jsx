@@ -9,23 +9,16 @@ import * as cartActions from '../actions/cart_actions';
 
 import { toJS } from 'immutable';
 
+import { mergeCartAndServices } from './cartServiceMerger';
+
 export class Cart extends Component {
 
 	render() {
 
-		let services = this.props.services.toJS();
-		let data = this.props.data.toJS();
+		const services = this.props.services.toJS();
+		const data = this.props.data.toJS();
 
-		let cartData = data.map((dataObj) => {
-			let targetService = find(services, (o) => o.id === dataObj.serviceId);
-			if(targetService) {
-				let nuDataObj = cloneDeep(targetService);
-				nuDataObj.instanceId = dataObj.id;
-				return nuDataObj;
-			}
-			return null;
-		});
-
+		const cartData = mergeCartAndServices(data, services, false);
 		console.log(cartData);
 
 

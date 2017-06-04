@@ -7,6 +7,13 @@ export function removePurchasedServiceInstancesFromCart(serviceInstances) {
 	};
 }
 
+export function purchaseServiceInstances(serviceInstances) {
+	return {
+		type: 'PURCHASE_SERVICE_INSTANCES',
+		data: serviceInstances
+	}
+}
+
 export function buyServices(serviceInstances) {
 	// return (dispatch) => {
 	// 	updateData('orders', serviceInstances)
@@ -18,7 +25,8 @@ export function buyServices(serviceInstances) {
 	// 	})
 	// }
 	// ^^ uncomment later when adding serviceInstances to orders array is tested
-	return removePurchasedServiceInstancesFromCart(serviceInstances);
+	//return removePurchasedServiceInstancesFromCart(serviceInstances);
+	return purchaseServiceInstances(serviceInstances);
 }
 
 export function setServiceInstances(serviceInstances) {

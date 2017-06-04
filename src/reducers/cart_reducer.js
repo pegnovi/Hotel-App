@@ -9,6 +9,20 @@ function setToCart(state, action) {
 	return state.push(action.data);
 }
 
+function purchaseServiceInstances(state, action) {
+	const cartInstanceIds = fromJS(action.data).map(
+		(cartInstanceObj) =>  cartInstanceObj.get('instanceId')
+	);
+	const nextState = state.map((item) => {
+		const index = cartInstanceIds.findIndex((instanceId) => instanceId === item.get('id'));
+		if(index !== -1) {
+			return item.setIn(['purchased'], true);
+		}
+		return item;
+	});
+	return nextState;
+}
+
 function removeServiceInstances(state, action) {
 	console.log('REMOVE SERVICE INSTANCES');
 	//could actually just empty the cart but will leave this here incase some flexibility is needed
@@ -31,6 +45,8 @@ export default function(state = fromJS([]), action) {
 			return removeFromCart(state, action);
 		case 'REMOVE_SERVICE_INSTANCES':
 			return removeServiceInstances(state, action);
+		case 'PURCHASE_SERVICE_INSTANCES':
+			return purchaseServiceInstances(state, action);
 		default:
 			return state;
 	}

@@ -6,6 +6,8 @@ import { find, cloneDeep } from 'lodash';
 
 import * as cartActions from '../actions/cart_actions';
 
+import { mergeCartAndServices } from './cartServiceMerger';
+
 import { toJS } from 'immutable';
 
 export class Checkout extends Component {
@@ -15,16 +17,9 @@ export class Checkout extends Component {
 		let services = this.props.services.toJS();
 		let data = this.props.data.toJS();
 
-		let cartData = data.map((dataObj) => {
-			let targetService = find(services, (o) => o.id === dataObj.serviceId);
-			if(targetService) {
-				let nuDataObj = cloneDeep(targetService);
-				nuDataObj.instanceId = dataObj.id;
-				return nuDataObj;
-			}
-			return null;
-		});
+		const cartData = mergeCartAndServices(data, services, false);
 
+		console.log(cartData);
 
 		return (
 			<div>
@@ -37,7 +32,7 @@ export class Checkout extends Component {
 				<p>
 					Purchase Services
 				</p>
-				<button onClick={() => {this.props.buyServices(data);}}>
+				<button onClick={() => {this.props.buyServices(cartData);}}>
 					Purchase Now!
 				</button>
 				

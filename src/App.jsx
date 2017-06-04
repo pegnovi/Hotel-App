@@ -61,11 +61,13 @@ const myOrderList = fromJS({
 	cart: [
 		{
 			id: 'abcd', // when order (combine instance list with product list)
-			serviceId: 'mr1'
+			serviceId: 'mr1',
+			purchased: false
 		},
 		{
 			id: 'efgh', // when order (combine instance list with product list)
-			serviceId: 'bib1'
+			serviceId: 'bib1',
+			purchased: true
 		}
 	]
 });
