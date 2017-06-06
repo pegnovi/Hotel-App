@@ -1,12 +1,5 @@
 import { getData, postData, updateData, removeData } from './requestHelper';
 
-export function removePurchasedServiceInstancesFromCart(serviceInstances) {
-	return {
-		type: 'REMOVE_SERVICE_INSTANCES',
-		data: serviceInstances
-	};
-}
-
 export function purchaseServiceInstances(serviceInstances) {
 	return {
 		type: 'PURCHASE_SERVICE_INSTANCES',
@@ -19,13 +12,9 @@ export function buyServices(serviceInstances) {
 	// 	updateData('orders', serviceInstances)
 	// 	.then((response) => {
 	// 		console.log(response);
-	// 		// Dispatch action that adds serviceInstances to orders array
-
-	// 		dispatch(removePurchasedServiceInstancesFromCart(serviceInstances));
 	// 	})
 	// }
 	// ^^ uncomment later when adding serviceInstances to orders array is tested
-	//return removePurchasedServiceInstancesFromCart(serviceInstances);
 	return purchaseServiceInstances(serviceInstances);
 }
 
@@ -48,9 +37,9 @@ export function getServiceInstances() {
 	}
 }
 
-export function setToCart(serviceInstance) {
+export function addServiceInstance(serviceInstance) {
 	return {
-		type: 'SET_TO_CART',
+		type: 'ADD_SERVICE_INSTANCE',
 		data: serviceInstance
 	};
 }
@@ -59,7 +48,7 @@ export function addToCart(serviceInstance) {
 		postData('serviceInstances', serviceInstance)
 		.then((responseObj) => {
 			serviceInstance.id = responseObj.id;
-			dispatch(setToCart(serviceInstance));
+			dispatch(addServiceInstance(serviceInstance));
 		});
 	}
 }
@@ -72,7 +61,7 @@ export function removeFromCart(data) {
 	});
 
 	return {
-		type: 'REMOVE_FROM_CART',
+		type: 'REMOVE_SERVICE_INSTANCE',
 		data
 	};
 }

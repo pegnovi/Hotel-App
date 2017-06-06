@@ -4,8 +4,8 @@ function setServiceInstances(state, action) {
 	return state.merge(fromJS(action.data));
 }
 
-function setToCart(state, action) {
-	console.log('ADD TO CART');
+function addServiceInstance(state, action) {
+	console.log('ADD SERVICE INSTANCE');
 	return state.push(action.data);
 }
 
@@ -30,7 +30,7 @@ function removeServiceInstances(state, action) {
 	return state.filter((cartItem) => instancesToRemove.includes(cartItem.id))
 }
 
-function removeFromCart(state, action) {
+function removeServiceInstance(state, action) {
 	console.log('REMOVE FROM CART');
 	return state.filterNot((cartItem) => cartItem.id === action.data.instanceId);
 }
@@ -39,10 +39,10 @@ export default function(state = fromJS([]), action) {
 	switch(action.type) {
 		case 'SET_SERVICE_INSTANCES':
 			return setServiceInstances(state, action);
-		case 'SET_TO_CART':
-			return setToCart(state, action);
-		case 'REMOVE_FROM_CART':
-			return removeFromCart(state, action);
+		case 'ADD_SERVICE_INSTANCE':
+			return addServiceInstance(state, action);
+		case 'REMOVE_SERVICE_INSTANCE':
+			return removeServiceInstance(state, action);
 		case 'REMOVE_SERVICE_INSTANCES':
 			return removeServiceInstances(state, action);
 		case 'PURCHASE_SERVICE_INSTANCES':

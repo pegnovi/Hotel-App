@@ -5,22 +5,20 @@ import { connect } from 'react-redux';
 
 import { find, cloneDeep } from 'lodash';
 
-import * as cartActions from '../actions/cart_actions';
+import * as serviceInstanceActions from '../actions/service_instance_actions';
 
 import { toJS } from 'immutable';
 
-import { mergeCartAndServices } from './cartServiceMerger';
+import { mergeServicesAndInstances } from './serviceMerger';
 
 export class Cart extends Component {
 
 	render() {
 
 		const services = this.props.services.toJS();
-		const data = this.props.data.toJS();
+		const serviceInstances = this.props.serviceInstances.toJS();
 
-		const cartData = mergeCartAndServices(data, services, false);
-		console.log(cartData);
-
+		const cartData = mergeServicesAndInstances(serviceInstances, services, false);
 
 		return (
 			<div>
@@ -66,11 +64,11 @@ export class Cart extends Component {
 function mapStateToProps(state) {
 	return {
 		services: state.get('services'),
-		data: state.get('cart')
+		serviceInstances: state.get('serviceInstances')
 	}
 }
 
 export const CartContainer = connect(
 	mapStateToProps,
-	cartActions
+	serviceInstanceActions
 )(Cart);

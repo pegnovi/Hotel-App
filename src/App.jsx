@@ -14,7 +14,7 @@ import { ServiceInstanceContainer } from './components/ServiceInstance';
 
 import Rooms from './components/Rooms';
 
-import cartReducer from './reducers/cart_reducer';
+import serviceInstanceReducer from './reducers/service_instance_reducer';
 import serviceReducer from './reducers/service_reducer';
 import regularReducer from './reducers/regular_reducer';
 import reducer from './reducers/reducer';
@@ -22,7 +22,7 @@ import reducer from './reducers/reducer';
 //import remoteActionMiddleware from './remote_action_middleware';
 import { setState } from './actions/regular_actions';
 import { getServices } from './actions/service_actions';
-import { getServiceInstances } from './actions/cart_actions';
+import { getServiceInstances } from './actions/service_instance_actions';
 
 import { combineReducers } from 'redux-immutable';
 import { createStore, applyMiddleware } from 'redux';
@@ -58,7 +58,7 @@ const myOrderList = fromJS({
 			price: 41
 		}
 	],
-	cart: [
+	serviceInstances: [
 		{
 			id: 'abcd', // when order (combine instance list with product list)
 			serviceId: 'mr1',
@@ -90,11 +90,11 @@ const createStoreWithMiddleware = applyMiddleware(
 
 const initialState = fromJS({
 	services: [],
-	cart: []
+	serviceInstances: []
 });
 // https://bumbu.github.io/redux-combinereducers-for-immutable-js/
 const rootReducer = combineReducers({
-		cart: cartReducer,
+		serviceInstances: serviceInstanceReducer,
 		services: serviceReducer,
 		regularReducer
 	}

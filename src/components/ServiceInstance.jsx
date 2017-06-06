@@ -6,7 +6,7 @@ import { FieldGroup, FieldGroupDateTime } from './FieldGroup';
 
 import { find } from 'lodash';
 
-import * as cartActions from '../actions/cart_actions';
+import * as serviceInstanceActions from '../actions/service_instance_actions';
 import { connect } from 'react-redux';
 
 import { toJS } from 'immutable';
@@ -91,5 +91,5 @@ function mapStateToProps(state) {
 
 export const ServiceInstanceContainer = connect(
 	mapStateToProps,
-	cartActions
+	serviceInstanceActions
 )(ServiceInstance);
