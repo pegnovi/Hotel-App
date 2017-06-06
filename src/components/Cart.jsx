@@ -20,6 +20,8 @@ export class Cart extends Component {
 
 		const cartData = mergeServicesAndInstances(serviceInstances, services, false);
 
+		console.log(cartData);
+
 		return (
 			<div>
 				<ProductTable

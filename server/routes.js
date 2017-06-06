@@ -66,9 +66,8 @@ module.exports = function(app) {
 		});
 	});
 
-	// Get all unpurchased service instances
 	app.get('/api/serviceInstances', (req, res) => {
-		db.any('SELECT * from serviceInstances where purchased = false')
+		db.any('SELECT * from serviceInstances')
 		.then((serviceInstances) => {
 			res.send(
 				_.map(serviceInstances, (serviceInstance) => {

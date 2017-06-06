@@ -71,7 +71,8 @@ export class ServiceInstance extends Component {
 						const serviceInstanceDetails = {
 							serviceId: this.props.match.params.id,
 							cartId: '2a', // user specific
-							scheduledDateTime: this.state.scheduledDateTime
+							scheduledDateTime: this.state.scheduledDateTime,
+							purchased: false
 						};
 						this.props.addToCart(serviceInstanceDetails); 
 					}

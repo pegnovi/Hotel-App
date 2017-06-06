@@ -3,7 +3,7 @@ import { find, filter, merge, cloneDeep } from 'lodash';
 export function mergeServicesAndInstances(serviceInstances, services, purchased) {
 
 	let merged = serviceInstances.map((serviceInstance) => {
-		const targetService = find(services, (o) => o.id === serviceInstance.serviceId);
+		const targetService = find(services, (service) => service.id === serviceInstance.serviceId);
 		if(targetService) {
 			let nuDataObj = cloneDeep(targetService);
 			nuDataObj.instanceId = serviceInstance.id;
