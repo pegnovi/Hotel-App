@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import ProductTable from './ProductTable';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { find, cloneDeep } from 'lodash';
 
 import * as serviceInstanceActions from '../actions/service_instance_actions';
 
-import { toJS } from 'immutable';
-
 import { mergeServicesAndInstances } from './serviceMerger';
 
-export class Cart extends Component {
+import { toJS } from 'immutable';
+
+export class Checkout extends Component {
 
 	render() {
 
@@ -20,41 +19,23 @@ export class Cart extends Component {
 
 		const cartData = mergeServicesAndInstances(serviceInstances, services, false);
 
+		console.log(cartData);
+
 		return (
 			<div>
 				<ProductTable
-					tableHeader={'Cart'}
+					tableHeader={'Checkout'}
 					data={cartData}
-
-					extraColumns={[
-						{
-							header: 'Action',
-							accessor: 'instanceId',
-							component: ((props) => {
-								return <div>
-									<button
-										onClick={() => {
-											const serviceInstanceDetails = {
-												instanceId: props.accessor
-											};
-											this.props.removeFromCart(serviceInstanceDetails);
-										}
-									}>
-										Remove From Cart
-									</button>
-								</div>
-							}),
-							componentProps: {
-							}
-						}
-					]}
 				/>
 
-				<Link to={`/checkout`}>
-					<button>
-						Checkout
-					</button>
-				</Link>
+				
+				<p>
+					Purchase Services
+				</p>
+				<button onClick={() => {this.props.buyServices(cartData);}}>
+					Purchase Now!
+				</button>
+				
 
 			</div>
 		);
@@ -68,7 +49,7 @@ function mapStateToProps(state) {
 	}
 }
 
-export const CartContainer = connect(
+export const CheckoutContainer = connect(
 	mapStateToProps,
 	serviceInstanceActions
-)(Cart);
+)(Checkout);

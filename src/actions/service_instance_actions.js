@@ -1,4 +1,22 @@
-import { getData, postData, removeData } from './requestHelper';
+import { getData, postData, updateData, removeData } from './requestHelper';
+
+export function purchaseServiceInstances(serviceInstances) {
+	return {
+		type: 'PURCHASE_SERVICE_INSTANCES',
+		data: serviceInstances
+	}
+}
+
+export function buyServices(serviceInstances) {
+	// return (dispatch) => {
+	// 	updateData('orders', serviceInstances)
+	// 	.then((response) => {
+	// 		console.log(response);
+	// 	})
+	// }
+	// ^^ uncomment later when adding serviceInstances to orders array is tested
+	return purchaseServiceInstances(serviceInstances);
+}
 
 export function setServiceInstances(serviceInstances) {
 	return {
@@ -19,9 +37,9 @@ export function getServiceInstances() {
 	}
 }
 
-export function setToCart(serviceInstance) {
+export function addServiceInstance(serviceInstance) {
 	return {
-		type: 'SET_TO_CART',
+		type: 'ADD_SERVICE_INSTANCE',
 		data: serviceInstance
 	};
 }
@@ -30,7 +48,7 @@ export function addToCart(serviceInstance) {
 		postData('serviceInstances', serviceInstance)
 		.then((responseObj) => {
 			serviceInstance.id = responseObj.id;
-			dispatch(setToCart(serviceInstance));
+			dispatch(addServiceInstance(serviceInstance));
 		});
 	}
 }
@@ -43,7 +61,7 @@ export function removeFromCart(data) {
 	});
 
 	return {
-		type: 'REMOVE_FROM_CART',
+		type: 'REMOVE_SERVICE_INSTANCE',
 		data
 	};
 }

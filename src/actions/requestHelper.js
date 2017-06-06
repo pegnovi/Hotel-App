@@ -9,6 +9,12 @@ export function createOptions(method, data) {
 	return options;
 }
 
+export function updateData(targetApi, data) {
+	const options = createOptions('PUT', data);
+	return fetch(`/api/${targetApi}`, options)
+	.then((response) => response.json());
+}
+
 export function getData(targetApi) {
 	const options = createOptions('GET');
 	return fetch(`/api/${targetApi}`, options)

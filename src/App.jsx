@@ -8,12 +8,13 @@ import './App.css';
 import CustomNavigationBar from './components/CustomNavigationBar';
 import ProductTable from './components/ProductTable';
 import { CartContainer } from './components/Cart';
+import { CheckoutContainer } from './components/Checkout';
 import { ShopContainer } from './components/Shop';
 import { ServiceInstanceContainer } from './components/ServiceInstance';
 
 import Rooms from './components/Rooms';
 
-import cartReducer from './reducers/cart_reducer';
+import serviceInstanceReducer from './reducers/service_instance_reducer';
 import serviceReducer from './reducers/service_reducer';
 import regularReducer from './reducers/regular_reducer';
 import reducer from './reducers/reducer';
@@ -21,7 +22,7 @@ import reducer from './reducers/reducer';
 //import remoteActionMiddleware from './remote_action_middleware';
 import { setState } from './actions/regular_actions';
 import { getServices } from './actions/service_actions';
-import { getServiceInstances } from './actions/cart_actions';
+import { getServiceInstances } from './actions/service_instance_actions';
 
 import { combineReducers } from 'redux-immutable';
 import { createStore, applyMiddleware } from 'redux';
@@ -40,7 +41,7 @@ const TestParam = ({match}) => {
 
 
 // TODO: Query for this later
-const myOrderList = {
+const myOrderList = fromJS({
 	services: [
 		{
 			id: 'mr1',
@@ -57,17 +58,19 @@ const myOrderList = {
 			price: 41
 		}
 	],
-	cart: [
+	serviceInstances: [
 		{
 			id: 'abcd', // when order (combine instance list with product list)
-			serviceId: 'mr1'
+			serviceId: 'mr1',
+			purchased: false
 		},
 		{
 			id: 'efgh', // when order (combine instance list with product list)
-			serviceId: 'bib1'
+			serviceId: 'bib1',
+			purchased: true
 		}
 	]
-};
+});
 
 // Passing props to Route components
 // By tchaffee
@@ -87,11 +90,11 @@ const createStoreWithMiddleware = applyMiddleware(
 
 const initialState = fromJS({
 	services: [],
-	cart: []
+	serviceInstances: []
 });
 // https://bumbu.github.io/redux-combinereducers-for-immutable-js/
 const rootReducer = combineReducers({
-		cart: cartReducer,
+		serviceInstances: serviceInstanceReducer,
 		services: serviceReducer,
 		regularReducer
 	}
@@ -99,10 +102,10 @@ const rootReducer = combineReducers({
 // https://github.com/gajus/redux-immutable
 
 //const store = createStoreWithMiddleware(reducer);
-const store = createStoreWithMiddleware(rootReducer, initialState);
+const store = createStoreWithMiddleware(rootReducer, myOrderList);
 console.log(store.getState());
-store.dispatch(getServices());
-store.dispatch(getServiceInstances());
+// store.dispatch(getServices());
+// store.dispatch(getServiceInstances());
 //store.dispatch(setState(myOrderList));
 
 
@@ -136,6 +139,7 @@ class App extends Component {
 						<Route path="/shop/" component={ShopContainer}/>
 						<Route path="/serviceInstance/:id" component={ServiceInstanceContainer}/>
 						<Route path="/cart/" component={CartContainer}/>
+						<Route path="/checkout" component={CheckoutContainer}/>
 						<Route path="/orders/" render={() => <ProductTable
 								tableHeader={'Orders'}
 								tableType={'orders'}
