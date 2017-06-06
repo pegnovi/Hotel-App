@@ -11,6 +11,7 @@ import { CartContainer } from './components/Cart';
 import { CheckoutContainer } from './components/Checkout';
 import { ShopContainer } from './components/Shop';
 import { ServiceInstanceContainer } from './components/ServiceInstance';
+import { OrdersContainer } from './components/Orders';
 
 import Rooms from './components/Rooms';
 
@@ -102,24 +103,14 @@ const rootReducer = combineReducers({
 // https://github.com/gajus/redux-immutable
 
 //const store = createStoreWithMiddleware(reducer);
-const store = createStoreWithMiddleware(rootReducer, myOrderList);
-console.log(store.getState());
-// store.dispatch(getServices());
-// store.dispatch(getServiceInstances());
+const store = createStoreWithMiddleware(rootReducer, initialState);
+//console.log(store.getState());
+store.dispatch(getServices());
+store.dispatch(getServiceInstances());
 //store.dispatch(setState(myOrderList));
 
 
 class App extends Component {
-	constructor(props) {
-		super(props);
-
-		this.state = fromJS(
-			{
-				services: [],
-				cart: []
-			}
-		);
-	}
 	render() {
 		return (
 			<Provider store={store}>
@@ -140,12 +131,7 @@ class App extends Component {
 						<Route path="/serviceInstance/:id" component={ServiceInstanceContainer}/>
 						<Route path="/cart/" component={CartContainer}/>
 						<Route path="/checkout" component={CheckoutContainer}/>
-						<Route path="/orders/" render={() => <ProductTable
-								tableHeader={'Orders'}
-								tableType={'orders'}
-								data={myOrderList}
-							/>
-						} />
+						<Route path="/orders/" component={OrdersContainer}/>
 					</div>
 				</Router>
 			</Provider>

@@ -7,15 +7,14 @@ export function purchaseServiceInstances(serviceInstances) {
 	}
 }
 
-export function buyServices(serviceInstances) {
-	// return (dispatch) => {
-	// 	updateData('orders', serviceInstances)
-	// 	.then((response) => {
-	// 		console.log(response);
-	// 	})
-	// }
-	// ^^ uncomment later when adding serviceInstances to orders array is tested
-	return purchaseServiceInstances(serviceInstances);
+export function buyServiceInstances(serviceInstances) {
+	return (dispatch) => {
+		updateData('orders', serviceInstances)
+		.then((response) => {
+			console.log(response);
+			dispatch(purchaseServiceInstances(serviceInstances));
+		})
+	};
 }
 
 export function setServiceInstances(serviceInstances) {

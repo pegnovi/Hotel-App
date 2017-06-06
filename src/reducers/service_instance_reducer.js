@@ -1,6 +1,7 @@
 import { Map, List, fromJS, toJS } from 'immutable';
 
 function setServiceInstances(state, action) {
+	console.log(action.data);
 	return state.merge(fromJS(action.data));
 }
 

@@ -32,7 +32,7 @@ export class Checkout extends Component {
 				<p>
 					Purchase Services
 				</p>
-				<button onClick={() => {this.props.buyServices(cartData);}}>
+				<button onClick={() => {this.props.buyServiceInstances(cartData);}}>
 					Purchase Now!
 				</button>
 				
