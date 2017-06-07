@@ -51,6 +51,10 @@ export default class CustomNavigationBar extends Component {
 						<NavLink exact to="/orders" activeStyle={selectedStyle}>Orders</NavLink>
 					</NavItem>
 
+					<NavItem eventKey={6}>
+						<NavLink exact to="/contact" activeStyle={selectedStyle}>Contact</NavLink>
+					</NavItem>
+
 				</Nav>
 			</Navbar>
 		</div>

@@ -12,13 +12,14 @@ import { CheckoutContainer } from './components/Checkout';
 import { ShopContainer } from './components/Shop';
 import { ServiceInstanceContainer } from './components/ServiceInstance';
 import { OrdersContainer } from './components/Orders';
+import ContactForm from './components/ContactForm';
 
 import Rooms from './components/Rooms';
 
 import serviceInstanceReducer from './reducers/service_instance_reducer';
 import serviceReducer from './reducers/service_reducer';
-import regularReducer from './reducers/regular_reducer';
-import reducer from './reducers/reducer';
+//import regularReducer from './reducers/regular_reducer';
+//import reducer from './reducers/reducer';
 
 //import remoteActionMiddleware from './remote_action_middleware';
 import { setState } from './actions/regular_actions';
@@ -28,6 +29,8 @@ import { getServiceInstances } from './actions/service_instance_actions';
 import { combineReducers } from 'redux-immutable';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+
+import { reducer as formReducer } from 'redux-form/immutable'
 
 import { fromJS } from 'immutable';
 
@@ -97,16 +100,16 @@ const initialState = fromJS({
 const rootReducer = combineReducers({
 		serviceInstances: serviceInstanceReducer,
 		services: serviceReducer,
-		regularReducer
+		form: formReducer
 	}
 );
 // https://github.com/gajus/redux-immutable
 
 //const store = createStoreWithMiddleware(reducer);
-const store = createStoreWithMiddleware(rootReducer, initialState);
+const store = createStoreWithMiddleware(rootReducer, myOrderList);
 //console.log(store.getState());
-store.dispatch(getServices());
-store.dispatch(getServiceInstances());
+// store.dispatch(getServices());
+// store.dispatch(getServiceInstances());
 //store.dispatch(setState(myOrderList));
 
 
@@ -132,6 +135,7 @@ class App extends Component {
 						<Route path="/cart/" component={CartContainer}/>
 						<Route path="/checkout" component={CheckoutContainer}/>
 						<Route path="/orders/" component={OrdersContainer}/>
+						<Route path="/contact/" component={ContactForm}/>
 					</div>
 				</Router>
 			</Provider>
