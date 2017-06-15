@@ -42,6 +42,7 @@ class ContactForm extends Component {
 
 		console.log(submitting);
 		console.log(invalid);
+		console.log(pristine);
 
 		return (
 			<form onSubmit={handleSubmit(doSubmit)}>
