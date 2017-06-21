@@ -32,6 +32,29 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => {
 	</div>
 }
 
+
+import { FormGroup, Col, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import DateTime from 'react-datetime';
+//const dateField = ({ id, label, help, ...props }) 
+const dateField = ({ input, label, type, meta: { touched, error } }) => {
+	console.log(input)
+	return (
+		<div>
+			<FormGroup controlId={input.name}>
+				<Col xs={3} md={3}>
+					<ControlLabel>{label}</ControlLabel>
+				</Col>
+				<Col xs={6} md={6}>
+					<DateTime {...input} />
+				</Col>
+				{touched && error && <span>{error}</span>}
+			</FormGroup>
+			<br />
+			<br />
+		</div>
+	);
+}
+
 const doSubmit = (values) => {
 	console.log(values.toJS());
 }
@@ -40,15 +63,16 @@ class ContactForm extends Component {
 	render() {
 		const { handleSubmit, invalid, pristine, reset, submitting } = this.props;
 
-		console.log(submitting);
-		console.log(invalid);
-		console.log(pristine);
+		// console.log(submitting);
+		// console.log(invalid);
+		// console.log(pristine);
 
 		return (
 			<form onSubmit={handleSubmit(doSubmit)}>
 				<Field name="firstName" component={renderField} type="text" label="First Name"/>
 				<Field name="lastName" component={renderField} type="text" label="Last Name"/>
 				<Field name="email" component={renderField} type="email" label="E-mail"/>
+				<Field name="randomDate" component={dateField} type="datetime" label="Random Date"/>
 				<div>
 					<button type="submit" disabled={invalid || submitting}>Submit</button>
 					<button type="button" disabled={pristine || submitting} onClick={reset}>Clear</button>
