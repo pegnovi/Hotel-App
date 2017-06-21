@@ -45,7 +45,7 @@ const dateField = ({ input, label, type, meta: { touched, error } }) => {
 					<ControlLabel>{label}</ControlLabel>
 				</Col>
 				<Col xs={6} md={6}>
-					<DateTime {...input} />
+					<DateTime {...input}/>
 				</Col>
 				{touched && error && <span>{error}</span>}
 			</FormGroup>
@@ -53,6 +53,26 @@ const dateField = ({ input, label, type, meta: { touched, error } }) => {
 			<br />
 		</div>
 	);
+}
+
+const validDate = (value) => {
+	const invalidDateMessage = 'Invalid Date';
+	if(value) {
+		if(typeof value === 'String') {
+			return invalidDateMessage;
+		}
+		else {
+			if(value.isValid()) {
+				return undefined;
+			}
+			else {
+				return invalidDateMessage;
+			}
+		}
+	}
+	else {
+		return invalidDateMessage;
+	}
 }
 
 const doSubmit = (values) => {
@@ -72,7 +92,7 @@ class ContactForm extends Component {
 				<Field name="firstName" component={renderField} type="text" label="First Name"/>
 				<Field name="lastName" component={renderField} type="text" label="Last Name"/>
 				<Field name="email" component={renderField} type="email" label="E-mail"/>
-				<Field name="randomDate" component={dateField} type="datetime" label="Random Date"/>
+				<Field name="randomDate" component={dateField} type="datetime" label="Random Date" validate={validDate}/>
 				<div>
 					<button type="submit" disabled={invalid || submitting}>Submit</button>
 					<button type="button" disabled={pristine || submitting} onClick={reset}>Clear</button>
