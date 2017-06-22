@@ -38,3 +38,23 @@ export function FieldGroupDateTime({ id, label, help, ...props }) {
 		</div>
 	);
 }
+
+
+// For use with redux-form
+export function dateFieldReduxForm({ input, label, type, meta: { touched, error } }) {
+	return (
+		<div>
+			<FormGroup controlId={input.name}>
+				<Col xs={3} md={3}>
+					<ControlLabel>{label}</ControlLabel>
+				</Col>
+				<Col xs={6} md={6}>
+					<DateTime {...input}/>
+				</Col>
+				{touched && error && <span>{error}</span>}
+			</FormGroup>
+			<br />
+			<br />
+		</div>
+	);
+}

@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 // http://redux-form.com/6.2.0/examples/immutable/
 import { Field, reduxForm } from 'redux-form/immutable';
 
+import { dateFieldReduxForm } from './FieldGroup';
+
 import { toJS } from 'immutable';
 
 const validate = values => {
@@ -33,32 +35,13 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => {
 }
 
 
-import { FormGroup, Col, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
-import DateTime from 'react-datetime';
-//const dateField = ({ id, label, help, ...props }) 
-const dateField = ({ input, label, type, meta: { touched, error } }) => {
-	console.log(input)
-	return (
-		<div>
-			<FormGroup controlId={input.name}>
-				<Col xs={3} md={3}>
-					<ControlLabel>{label}</ControlLabel>
-				</Col>
-				<Col xs={6} md={6}>
-					<DateTime {...input}/>
-				</Col>
-				{touched && error && <span>{error}</span>}
-			</FormGroup>
-			<br />
-			<br />
-		</div>
-	);
-}
 
 const validDate = (value) => {
 	const invalidDateMessage = 'Invalid Date';
 	if(value) {
-		if(typeof value === 'String') {
+		console.log(typeof value);
+
+		if(typeof value === 'string') {
 			return invalidDateMessage;
 		}
 		else {
@@ -92,7 +75,7 @@ class ContactForm extends Component {
 				<Field name="firstName" component={renderField} type="text" label="First Name"/>
 				<Field name="lastName" component={renderField} type="text" label="Last Name"/>
 				<Field name="email" component={renderField} type="email" label="E-mail"/>
-				<Field name="randomDate" component={dateField} type="datetime" label="Random Date" validate={validDate}/>
+				<Field name="randomDate" component={dateFieldReduxForm} type="datetime" label="Random Date" validate={validDate}/>
 				<div>
 					<button type="submit" disabled={invalid || submitting}>Submit</button>
 					<button type="button" disabled={pristine || submitting} onClick={reset}>Clear</button>
