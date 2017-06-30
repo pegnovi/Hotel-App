@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 
-import { Button } from 'react-bootstrap';
-
-import { FieldGroup, FieldGroupDateTime } from './FieldGroup';
 
 import { find } from 'lodash';
 
@@ -11,22 +8,16 @@ import { connect } from 'react-redux';
 
 import { toJS } from 'immutable';
 
+// Redux-Form
+import { Field, reduxForm } from 'redux-form/immutable';
+import { DateTimeInputField, TextInputField } from './reduxFormInputComponents';
+import { required, validDate } from './validators';
+
 // TODO: Form input validation (validationState)
 // TODO: Form value saving (onChange handler to set state)
 
 export class ServiceInstance extends Component {
-	constructor(props) {
-		super(props);
 
-		// initialize app state
-		this.state = {};
-	}
-	componentDidMount() {
-		this.setState({
-			val: '',
-			scheduledDateTime: ''
-		});
-	}
 	render() {
 
 		const chosenService = find(this.props.data.toJS(),
@@ -35,7 +26,22 @@ export class ServiceInstance extends Component {
 			}
 		);
 
+		const { handleSubmit, invalid, pristine, reset, submitting } = this.props;
+
+
+		const doSubmit = (values) => {
+			const jsValues = values.toJS();
+			const serviceInstanceDetails = {
+				serviceId: this.props.serviceId,
+				cartId: this.props.cartId, // user specific
+				scheduledDateTime: jsValues.scheduledDateTime.format('MM/DD/YYYY HH:mm'),
+				purchased: false
+			};
+			this.props.addToCart(serviceInstanceDetails); 
+		}
+
 		return <div>
+
 			Hello {this.props.match.params.id}
 
 			<br/>
@@ -46,51 +52,33 @@ export class ServiceInstance extends Component {
 			{chosenService.price}
 			<br/>
 
-			<FieldGroup
-				id="val"
-				type="text"
-				label="Value"
-				placeholder="Enter Value"
-				value={this.state.text}
-				onChange={(e) => {
-					this.setState({ val: e.target.value});
-				}}
-			/>
+			<form onSubmit={handleSubmit(doSubmit)}>
+			
+				<Field name="scheduledDateTime" component={DateTimeInputField} type="datetime" label="Scheduled Date Time" validate={validDate}/>
+				<div>
+					<button type="submit" disabled={invalid || submitting}>Submit</button>
+					<button type="button" disabled={pristine || submitting} onClick={reset}>Clear</button>
+				</div>
+			</form>
 
-			<FieldGroupDateTime
-				id="scheduledDateTime"
-				label="Scheduled Date Time"
-				onChange={(value) => {
-					const dateFormat = 'MM-DD-YYYY h:mm A';
-					this.setState({ scheduledDateTime: value.format(dateFormat)});
-				}}
-			/>
-
-			<Button
-				onClick={() => { 
-						const serviceInstanceDetails = {
-							serviceId: this.props.match.params.id,
-							cartId: '2a', // user specific
-							scheduledDateTime: this.state.scheduledDateTime,
-							purchased: false
-						};
-						this.props.addToCart(serviceInstanceDetails); 
-					}
-				}
-			>
-				Submit
-			</Button>
 		</div>
 	}
 }
 
+
+// http://redux-form.com/6.0.0-alpha.4/examples/initializeFromState/
 function mapStateToProps(state) {
 	return {
 		data: state.get('services')
 	};
 }
 
+const ServiceInstanceForm = reduxForm({
+	form: 'serviceInstanceForm', // a unique name for this form
+	//validate, // validation function
+})(ServiceInstance);
+
 export const ServiceInstanceContainer = connect(
 	mapStateToProps,
 	serviceInstanceActions
-)(ServiceInstance);
+)(ServiceInstanceForm);

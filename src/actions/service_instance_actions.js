@@ -44,6 +44,7 @@ export function addServiceInstance(serviceInstance) {
 }
 export function addToCart(serviceInstance) {
 	return (dispatch) => {
+		console.log(serviceInstance);
 		postData('serviceInstances', serviceInstance)
 		.then((responseObj) => {
 			serviceInstance.id = responseObj.id;
