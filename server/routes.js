@@ -23,24 +23,14 @@ module.exports = function(app) {
 		var serviceInstances = req.body;
 
 		var cs = new pgp.helpers.ColumnSet([
+			'?id',
 			{
-				name: 'id',
-				//cast: 'text',
-				cnd: true
-			},
-			//'?id',
-			'purchased'
-		]);
+				name: 'purchased',
+				init: () => true
+			}
+		], {table: 'serviceinstances'});
 
-		//var cs = new pgp.helpers.ColumnSet();
-		var values = req.body.map((serviceInstance) => {
-			return {
-				id: serviceInstance.id,
-				purchased: true
-			};
-		})
-
-		var query = pgp.helpers.update(values, cs, 'serviceinstances') + ' WHERE v.id = t.id::text';
+		var query = pgp.helpers.update(req.body, cs) + ' WHERE v.id = t.id::text';
 		console.log(query);
 		db.none(query).
 		then(() => {
